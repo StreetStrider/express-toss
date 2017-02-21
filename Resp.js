@@ -14,12 +14,14 @@
 ; export type Resp<T> =
 {
 	inspect (): [ Status, Mime, T | Symbol ],
+
+	// eslint-disable-next-line no-undef
 	toss (rs: express$Response): void
 }
 
-
 ; export default $Resp
 
+/* eslint-disable complexity */
 function $Resp <T> (/* :: ...resp: RespTuple<T> */): Resp<T>
 {
 	var status: Status = 200
@@ -55,6 +57,8 @@ function $Resp <T> (/* :: ...resp: RespTuple<T> */): Resp<T>
 	return 0,
 	{
 		inspect: () => [ status, mime, body ],
+
+		// eslint-disable-next-line no-undef
 		toss: (rs: express$Response) =>
 		{
 			rs.status(status)
@@ -76,5 +80,6 @@ function $Resp <T> (/* :: ...resp: RespTuple<T> */): Resp<T>
 		}
 	}
 }
+/* eslint-enable complexity */
 
 var Intact = $Resp.Intact = Symbol('Intact')
