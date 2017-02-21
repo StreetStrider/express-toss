@@ -13,8 +13,11 @@
     "flow":
       "flow check",
 
+    "mocha":
+      "npm run npm && mocha --recursive release/npm/dist/test/case",
+
     "test":
-      "npm run st && npm run flow",
+      "npm run st && npm run flow && npm run mocha",
 
     "npm":
       "metalbox preset npm"
