@@ -1,0 +1,45 @@
+{
+  "name":    "express-toss",
+  "version": "0.0.0",
+
+  "scripts":
+  {
+    "st":
+      "eslint .",
+
+    "flow":
+      "flow check",
+
+    "test":
+      "npm run st && npm run flow",
+
+    "npm":
+      "metalbox preset npm"
+  },
+
+  "metalbox":
+  {
+    "presets":
+    {
+      "npm": [ "Library" ]
+    }
+  },
+
+  "devDependencies":
+  {
+    "eslint":
+      "*",
+
+    "js-outlander":
+      "StrangeTransistor/js-outlander#2.1.0",
+
+    "flow-bin":
+      "0.39",
+
+    "flow-typed":
+      "2",
+
+    "metalbox":
+      "1"
+  }
+}
