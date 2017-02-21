@@ -48,6 +48,12 @@
     "flow-typed":
       "2",
 
+    "mocha":
+      "3",
+
+    "chai":
+      "3",
+
     "metalbox":
       "1"
   }
