@@ -14,7 +14,7 @@
 ; export type Resp<T> =
 {
 	inspect (): [ Status, Mime, T | Symbol ],
-	toss (rs: any): void
+	toss (rs: express$Response): void
 }
 
 
@@ -55,11 +55,12 @@ function $Resp <T> (/* :: ...resp: RespTuple<T> */): Resp<T>
 	return 0,
 	{
 		inspect: () => [ status, mime, body ],
-		toss: (rs: any) =>
+		toss: (rs: express$Response) =>
 		{
 			rs.status(status)
 
-			if (mime !== Intact)
+			if (typeof mime === 'string')
+			// if (mime !== Intact)
 			{
 				rs.type(mime)
 			}

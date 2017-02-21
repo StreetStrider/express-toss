@@ -4,6 +4,9 @@
 
   "scripts":
   {
+    "flow-typed":
+      "flow-typed install",
+
     "st":
       "eslint .",
 
@@ -23,6 +26,12 @@
     {
       "npm": [ "Library" ]
     }
+  },
+
+  "peerDependencies":
+  {
+    "express":
+      "4"
   },
 
   "devDependencies":
