@@ -1,4 +1,5 @@
 /* @flow */
+/* global express$Response */
 
 ; export type Status = number
 
@@ -14,8 +15,6 @@
 ; export type Resp<T> =
 {
 	inspect (): [ Status, Mime, T | Symbol ],
-
-	// eslint-disable-next-line no-undef
 	toss (rs: express$Response): void
 }
 
@@ -57,8 +56,6 @@ function $Resp <T> (/* :: ...resp: RespTuple<T> */): Resp<T>
 	return 0,
 	{
 		inspect: () => [ status, mime, body ],
-
-		// eslint-disable-next-line no-undef
 		toss: (rs: express$Response) =>
 		{
 			rs.status(status)
