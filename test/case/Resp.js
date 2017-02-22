@@ -43,6 +43,9 @@ describe('Resp', () =>
 
 		expect(Resp(400, new Buffer('abc')).inspect())
 		.deep.eq([ 400, Intact, new Buffer('abc') ])
+
+		expect(Resp(400, Intact).inspect())
+		.deep.eq([ 400, Intact, Intact ])
 	})
 
 	it('Resp(mime, body)', () =>
@@ -141,6 +144,7 @@ describe('Resp', () =>
 		check_rs(Resp(400, 'body'), 400, null, 'body')
 		check_rs(Resp(400, 200), 400, null, 200)
 		check_rs(Resp(400, 'json'), 400, null, 'json')
+		check_rs(Resp(400, Intact), 400, null, null)
 	})
 
 	it('toss(Resp(mime, body))', () =>

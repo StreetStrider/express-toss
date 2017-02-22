@@ -11,6 +11,7 @@
 = [ Status, Mime, Body ]
 | [ Status, Symbol, Body ] // workaround for (Mime | Symbol or Intacted<Mime>)
 | [ Status, Body ]
+| [ Status, Symbol ] // workaround for (Body | Symbol or Intacted<Body>)
 | [ Mime, Body ]
 | [ Body ]
 | []
