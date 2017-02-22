@@ -5,31 +5,31 @@
 
 ; export type Mime = string
 
-; export type Mime_i = string | Symbol
+; export type Intacted<T> = T | Symbol
 
-; export type RespTuple<T>
-= [ Status, Mime, T ]
-| [ Status, Symbol, T ] // workaround for (Mime | Symbol)
-| [ Status, T ]
-| [ Mime, T ]
-| [ Symbol, T ] // workaround for (Mime | Symbol)
-| [ T ]
+; export type RespTuple<Body>
+= [ Status, Mime, Body ]
+| [ Status, Symbol, Body ] // workaround for (Mime | Symbol or Intacted<Mime>)
+| [ Status, Body ]
+| [ Mime, Body ]
+| [ Symbol, Body ]  // workaround for (Mime | Symbol or Intacted<Mime>)
+| [ Body ]
 | []
 
-; export type Resp<T> =
+; export type Resp<Body> =
 {
-	inspect (): [ Status, Mime_i, T | Symbol ],
+	inspect (): [ Status, Intacted<Mime>, Intacted<Body> ],
 	toss (rs: express$Response): void
 }
 
 ; export default $Resp
 
 /* eslint-disable complexity */
-function $Resp <T> (/* :: ...resp: RespTuple<T> */): Resp<T>
+function $Resp <Body> (/* :: ...resp: RespTuple<Body> */): Resp<Body>
 {
 	var status: Status = 200
-	var mime: Mime_i = Intact
-	var body: T | Symbol = Intact
+	var mime: Intacted<Mime> = Intact
+	var body: Intacted<Body> = Intact
 
 	if (arguments.length === 1)
 	{
