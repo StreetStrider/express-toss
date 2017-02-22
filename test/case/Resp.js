@@ -146,10 +146,6 @@ describe('Resp', () =>
 	it('toss(Resp(mime, body))', () =>
 	{
 		check_rs(Resp('json', 'body'), 200, 'json', 'body')
-		/* @flow-off */
-		check_rs(Resp(Intact, 'body'), 200, null, 'body')
-		/* @flow-off */
-		check_rs(Resp(Intact, 200), 200, null, 200)
 	})
 
 	it('toss(Resp(status, mime, body))', () =>

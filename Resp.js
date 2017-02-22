@@ -12,7 +12,6 @@
 | [ Status, Symbol, Body ] // workaround for (Mime | Symbol or Intacted<Mime>)
 | [ Status, Body ]
 | [ Mime, Body ]
-| [ Symbol, Body ]  // workaround for (Mime | Symbol or Intacted<Mime>)
 | [ Body ]
 | []
 
