@@ -3,18 +3,22 @@
 
 ; export type Status = number
 
-; export type Mime = string | Symbol
+; export type Mime = string
+
+; export type Mime_i = string | Symbol
 
 ; export type RespTuple<T>
 = [ Status, Mime, T ]
+| [ Status, Symbol, T ] // workaround for (Mime | Symbol)
 | [ Status, T ]
 | [ Mime, T ]
+| [ Symbol, T ] // workaround for (Mime | Symbol)
 | [ T ]
 | []
 
 ; export type Resp<T> =
 {
-	inspect (): [ Status, Mime, T | Symbol ],
+	inspect (): [ Status, Mime_i, T | Symbol ],
 	toss (rs: express$Response): void
 }
 
@@ -24,7 +28,7 @@
 function $Resp <T> (/* :: ...resp: RespTuple<T> */): Resp<T>
 {
 	var status: Status = 200
-	var mime: Mime = Intact
+	var mime: Mime_i = Intact
 	var body: T | Symbol = Intact
 
 	if (arguments.length === 1)

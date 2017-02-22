@@ -41,7 +41,7 @@ describe('Resp', () =>
 
 	it('Resp(mime, body)', () =>
 	{
-		// expect(Resp('json', 'body').inspect()).deep.eq([ 200, 'json', 'body' ])
+		expect(Resp('json', 'body').inspect()).deep.eq([ 200, 'json', 'body' ])
 
 		// expect(Resp('json', 200).inspect()).deep.eq([ 200, 'json', 200 ])
 
