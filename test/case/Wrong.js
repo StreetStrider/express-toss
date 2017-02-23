@@ -31,4 +31,33 @@ describe('Wrong', () =>
 			data:   null
 		})
 	})
+
+	it('Wrong(data)', () =>
+	{
+		var wrong = Wrong('wrong_input')
+
+		var wr = wrong({ data: 'data' })
+
+		expect_resp(wr.resp(), 400, 'json',
+		{
+			error: 'wrong_input',
+			data: { data: 'data' }
+		})
+	})
+
+	it('Wrong(data) with options', () =>
+	{
+		var wrong = Wrong('not_found',
+		{
+			status: 404
+		})
+
+		var wr = wrong({ data: 'data' })
+
+		expect_resp(wr.resp(), 404, 'json',
+		{
+			error: 'not_found',
+			data: { data: 'data' }
+		})
+	})
 })
