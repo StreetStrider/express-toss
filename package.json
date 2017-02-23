@@ -40,7 +40,7 @@
   "devDependencies":
   {
     "eslint":
-      "*",
+      "3",
 
     "js-outlander":
       "StrangeTransistor/js-outlander#2.1.0",
