@@ -8,7 +8,15 @@ describe('Internal', () =>
 {
 	it('Internal()', () =>
 	{
-		var internal = Internal('LOL')
+		var internal = Internal()
+
+		expect_resp(internal.resp(),
+			400, 'json', { error: 'internal', data: void 0 })
+	})
+
+	it('Internal(something) ignores something', () =>
+	{
+		var internal = Internal('something')
 
 		expect_resp(internal.resp(),
 			400, 'json', { error: 'internal', data: void 0 })
