@@ -11,7 +11,7 @@ describe('Internal', () =>
 		var internal = Internal()
 
 		expect_resp(internal.resp(),
-			400, 'json', { error: 'internal', data: void 0 })
+			500, 'json', { error: 'internal', data: void 0 })
 	})
 
 	it('Internal(something) ignores something', () =>
@@ -19,6 +19,6 @@ describe('Internal', () =>
 		var internal = Internal('something')
 
 		expect_resp(internal.resp(),
-			400, 'json', { error: 'internal', data: void 0 })
+			500, 'json', { error: 'internal', data: void 0 })
 	})
 })

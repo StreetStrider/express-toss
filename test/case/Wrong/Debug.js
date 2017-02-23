@@ -11,7 +11,7 @@ describe('Debug', () =>
 		var debug = Debug()
 
 		expect_resp(debug.resp(),
-			400, 'json', { error: 'debug', data: void 0 })
+			500, 'json', { error: 'debug', data: void 0 })
 	})
 
 	it('Debug(data)', () =>
@@ -19,6 +19,6 @@ describe('Debug', () =>
 		var debug = Debug({ some: 'data' })
 
 		expect_resp(debug.resp(),
-			400, 'json', { error: 'debug', data: { some: 'data' }})
+			500, 'json', { error: 'debug', data: { some: 'data' }})
 	})
 })

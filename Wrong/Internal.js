@@ -8,7 +8,7 @@
 
 import $Wrong from './Wrong'
 
-var internal: Internal = $Wrong('internal')
+var internal: Internal = $Wrong('internal', { status: 500 })
 
 export default () =>
 {

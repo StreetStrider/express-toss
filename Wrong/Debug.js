@@ -8,6 +8,6 @@
 
 import $Wrong from './Wrong'
 
-var debug: Debug = $Wrong('debug')
+var debug: Debug = $Wrong('debug', { status: 500 })
 
 export default debug
