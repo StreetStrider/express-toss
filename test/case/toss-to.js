@@ -3,8 +3,6 @@
 import toss from '../../toss-to'
 import Resp from '../../Resp'
 
-//import { expect } from 'chai'
-
 import { pseudo_rs, expect_rs } from '../_/pseudo-rs'
 
 describe('toss-to', () =>
