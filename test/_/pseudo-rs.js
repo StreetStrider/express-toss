@@ -31,7 +31,7 @@ export function expect_rs
 {
 	expect(rs._[0]).eq(status)
 	expect(rs._[1]).eq(mime)
-	expect(rs._[2]).eq(data)
+	expect(rs._[2]).deep.eq(data)
 }
 
 export function expect_resp <T>
