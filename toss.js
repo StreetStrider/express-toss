@@ -51,10 +51,14 @@ export default function tosser (options?: Options)
 			},
 			error =>
 			{
-				if (! Wrong.is(error))
+				if (! error_or_wrong(error))
 				{
-					console.error('toss: non-protocol rejection')
+					console.error('toss: ' +
+					'rejection with nor Error, nor Wrong, ' +
+					'upgrade to Debug(rejection)')
 					console.error(error)
+
+					error = Debug(error)
 				}
 
 				toss(error, rs)
@@ -64,21 +68,35 @@ export default function tosser (options?: Options)
 
 	function toss (resp: any, rs: express$Response)
 	{
-		var pass
-
-		if (resp instanceof Error)
+		if (debug)
 		{
-			if (debug)
+			if (resp instanceof Error)
 			{
-				pass = Debug(resp)
+				console.error('toss: non-protocol error, upgrade to Debug(error)')
+				console.error(resp)
+
+				resp = Debug(resp) // stack
 			}
-			else
+		}
+		else
+		{
+			if (resp instanceof Error)
 			{
-				pass = Internal()
+				console.error('toss: non-protocol attempt, mask as Internal()')
+				console.error(resp)
+
+				resp = Internal()
+			}
+			else if (Debug.is(resp))
+			{
+				console.error('toss: Debug() attempt, mask as Internal()')
+				console.error(resp)
+
+				resp = Internal()
 			}
 		}
 
-		toss_to(pass, rs)
+		toss_to(resp, rs)
 	}
 }
 
@@ -90,5 +108,21 @@ function capture <T> (fn: Handler<T>): (rq: express$Request) => Promise<T>
 		{
 			return rs(fn.apply(this, arguments))
 		})
+	}
+}
+
+function error_or_wrong (it: any)
+{
+	if (it instanceof Error)
+	{
+		return true
+	}
+	else if (Wrong.is(it))
+	{
+		return true
+	}
+	else
+	{
+		return false
 	}
 }
