@@ -3,7 +3,7 @@
 
 export default (resp: any, rs: express$Response) =>
 {
-	if (typeof resp.toss === 'function')
+	if (resp && typeof resp.toss === 'function')
 	{
 		resp.toss(rs)
 	}
