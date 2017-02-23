@@ -36,7 +36,7 @@ var defaults =
 	status: 400
 }
 
-var mark = Symbol('Wrong')
+var marker = Symbol('Wrong')
 
 export default $Wrong
 
@@ -61,7 +61,7 @@ function $Wrong <Data> (code: Code, options?: Options): Wrong<Data>
 		return 0,
 		{
 			/* @flow-off */
-			[mark]: true,
+			[marker]: true,
 
 			code: code,
 
@@ -77,5 +77,5 @@ function $Wrong <Data> (code: Code, options?: Options): Wrong<Data>
 
 $Wrong.is = (it: any) =>
 {
-	return Boolean(it && (it[mark]))
+	return Boolean(it && (it[marker]))
 }

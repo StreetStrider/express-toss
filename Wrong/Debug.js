@@ -8,6 +8,23 @@
 
 import $Wrong from './Wrong'
 
-var debug: Debug = $Wrong('debug', { status: 500 })
+var $$Debug: Debug = $Wrong('debug', { status: 500 })
 
-export default debug
+var marker = Symbol('Debug')
+
+var $Debug: Debug = function (data)
+{
+	var debug = $$Debug(data)
+
+	/* @flow-off */
+	debug[marker] = true
+
+	return debug
+}
+
+export default $Debug
+
+$Debug.is = (it: any) =>
+{
+	return Boolean(it && (it[marker]))
+}

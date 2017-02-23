@@ -73,6 +73,7 @@ describe('Wrong', () =>
 		expect(Wrong.is(true)).false
 		expect(Wrong.is(0)).false
 		expect(Wrong.is(17)).false
+		expect(Wrong.is(() => {})).false
 		expect(Wrong.is({})).false
 		expect(Wrong.is([])).false
 
