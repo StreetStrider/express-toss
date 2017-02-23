@@ -46,7 +46,7 @@ export default <Data> (code: Code, options?: Options): Wrong<Data> =>
 	return (data: Data) =>
 	{
 		/* @flow-off */
-		(data == null) && (data = null)
+		(data == null) && (data = void 0)
 
 		var body: WrongData<Data> =
 		{

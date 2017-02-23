@@ -28,7 +28,7 @@ describe('Wrong', () =>
 		expect_resp(resp, 400, 'json',
 		{
 			error: 'wrong_input',
-			data:   null
+			data:   void 0
 		})
 	})
 

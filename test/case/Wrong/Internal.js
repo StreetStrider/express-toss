@@ -11,6 +11,6 @@ describe('Internal', () =>
 		var internal = Internal('LOL')
 
 		expect_resp(internal.resp(),
-			400, 'json', { error: 'internal', data: null })
+			400, 'json', { error: 'internal', data: void 0 })
 	})
 })
