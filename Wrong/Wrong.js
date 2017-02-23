@@ -1,6 +1,6 @@
 /* @flow */
 
-import type { Status, Resp } from './Resp'
+import type { Status, Resp } from '../Resp'
 
 ; export type Code = string
 
@@ -25,7 +25,7 @@ import type { Status, Resp } from './Resp'
 }
 
 ; var assign = Object.assign
-import $Resp from './Resp'
+import $Resp from '../Resp'
 
 var defaults =
 {

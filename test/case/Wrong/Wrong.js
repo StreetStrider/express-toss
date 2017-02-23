@@ -1,10 +1,10 @@
 /* @flow */
 
-import Wrong from '../../Wrong'
+import Wrong from '../../../Wrong'
 
 import { expect } from 'chai'
 
-import { expect_resp } from '../_/pseudo-rs'
+import { expect_resp } from '../../_/pseudo-rs'
 
 describe('Wrong', () =>
 {
