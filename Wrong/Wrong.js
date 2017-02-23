@@ -36,7 +36,11 @@ var defaults =
 	status: 400
 }
 
-export default <Data> (code: Code, options?: Options): Wrong<Data> =>
+var mark = Symbol('Wrong')
+
+export default $Wrong
+
+function $Wrong <Data> (code: Code, options?: Options): Wrong<Data>
 {
 	options = assign({}, defaults, options)
 
@@ -56,6 +60,9 @@ export default <Data> (code: Code, options?: Options): Wrong<Data> =>
 
 		return 0,
 		{
+			/* @flow-off */
+			[mark]: true,
+
 			code: code,
 
 			inspect: () => `[Wrong: ${code}]`,
@@ -66,4 +73,9 @@ export default <Data> (code: Code, options?: Options): Wrong<Data> =>
 			}
 		}
 	}
+}
+
+$Wrong.is = (it: any) =>
+{
+	return Boolean(it && (it[mark]))
 }
