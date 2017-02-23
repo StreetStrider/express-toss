@@ -26,8 +26,7 @@ export function pseudo_rs (): pseudo$Response
 
 export function expect_rs
 (
-	rs: pseudo$Response,
-	status: any, mime: any, data: any
+	rs: pseudo$Response, status: any, mime: any, data: any
 )
 {
 	expect(rs._[0]).eq(status)
@@ -35,7 +34,10 @@ export function expect_rs
 	expect(rs._[2]).eq(data)
 }
 
-export function check_rs <T> (resp: Resp<T>, status: any, mime: any, data: any)
+export function expect_resp <T>
+(
+	resp: Resp<T>, status: any, mime: any, data: any
+)
 {
 	var rs = pseudo_rs()
 

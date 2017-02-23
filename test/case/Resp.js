@@ -4,7 +4,7 @@ import Resp from '../../Resp'
 
 import { expect } from 'chai'
 
-import { check_rs } from '../_/pseudo-rs'
+import { expect_resp } from '../_/pseudo-rs'
 
 describe('Resp', () =>
 {
@@ -97,34 +97,34 @@ describe('Resp', () =>
 
 	it('toss(Resp())', () =>
 	{
-		check_rs(Resp(), 200, null, null)
+		expect_resp(Resp(), 200, null, null)
 	})
 
 	it('toss(Resp(body))', () =>
 	{
-		check_rs(Resp('body'), 200, null, 'body')
-		check_rs(Resp(200), 200, null, 200)
-		check_rs(Resp('json'), 200, null, 'json')
+		expect_resp(Resp('body'), 200, null, 'body')
+		expect_resp(Resp(200), 200, null, 200)
+		expect_resp(Resp('json'), 200, null, 'json')
 	})
 
 	it('toss(Resp(status, body))', () =>
 	{
-		check_rs(Resp(400, 'body'), 400, null, 'body')
-		check_rs(Resp(400, 200), 400, null, 200)
-		check_rs(Resp(400, 'json'), 400, null, 'json')
-		check_rs(Resp(400, Intact), 400, null, null)
+		expect_resp(Resp(400, 'body'), 400, null, 'body')
+		expect_resp(Resp(400, 200), 400, null, 200)
+		expect_resp(Resp(400, 'json'), 400, null, 'json')
+		expect_resp(Resp(400, Intact), 400, null, null)
 	})
 
 	it('toss(Resp(mime, body))', () =>
 	{
-		check_rs(Resp('json', 'body'), 200, 'json', 'body')
+		expect_resp(Resp('json', 'body'), 200, 'json', 'body')
 	})
 
 	it('toss(Resp(status, mime, body))', () =>
 	{
-		check_rs(Resp(400, 'json', 'body'), 400, 'json', 'body')
-		check_rs(Resp(400, 'json', 200), 400, 'json', 200)
+		expect_resp(Resp(400, 'json', 'body'), 400, 'json', 'body')
+		expect_resp(Resp(400, 'json', 200), 400, 'json', 200)
 		/* @flow-off */
-		check_rs(Resp(400, Intact, 'body'), 400, null, 'body')
+		expect_resp(Resp(400, Intact, 'body'), 400, null, 'body')
 	})
 })
