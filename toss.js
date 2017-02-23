@@ -75,7 +75,7 @@ export default function tosser (options?: Options)
 				console.error('toss: non-protocol error, upgrade to Debug(error)')
 				console.error(resp)
 
-				resp = Debug(resp) // stack
+				resp = Debug(raw_error(resp))
 			}
 		}
 		else
@@ -124,5 +124,15 @@ function error_or_wrong (it: any)
 	else
 	{
 		return false
+	}
+}
+
+function raw_error (error: Error)
+{
+	return 0,
+	{
+		name: error.name,
+		message: error.message,
+		stack: error.stack,
 	}
 }
