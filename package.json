@@ -2,6 +2,24 @@
   "name":    "express-toss",
   "version": "0.0.0",
 
+   "author": "Strider <strange.transistor@gmail.com>",
+  "license": "ISC",
+
+  "engines":
+  {
+    "node": ">=4"
+  },
+
+  "main": "toss.js",
+
+  "files":
+  [
+    "Wrong/",
+    "Resp.js",
+    "toss.js",
+    "toss-to.js"
+  ],
+
   "scripts":
   {
     "flow-typed":
