@@ -2,7 +2,7 @@
 
 ; import type { Wrong } from './Wrong'
 
-; export type Internal = Wrong<*>
+; export type Internal = Wrong<void>
 
 ;
 
