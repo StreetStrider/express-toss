@@ -22,7 +22,9 @@
 	toss (rs: express$Response): void
 }
 
-; export default $Resp
+;
+
+export default $Resp
 
 /* eslint-disable complexity */
 function $Resp <Body> (/* :: ...resp: RespTuple<Body> */): Resp<Body>
