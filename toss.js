@@ -14,6 +14,7 @@
 
 var assign = Object.assign
 
+import Wrong from './Wrong'
 import Debug from './Wrong/Debug'
 import Internal from './Wrong/Internal'
 
@@ -50,6 +51,12 @@ export default function tosser (options?: Options)
 			},
 			error =>
 			{
+				if (! Wrong.is(error))
+				{
+					console.error('toss: non-protocol rejection')
+					console.error(error)
+				}
+
 				toss(error, rs)
 			})
 		}
