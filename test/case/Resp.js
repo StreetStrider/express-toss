@@ -1,10 +1,10 @@
 /* @flow */
-/* global express$Response */
 
 import Resp from '../../Resp'
-import type { Resp as $Resp } from '../../Resp'
 
 import { expect } from 'chai'
+
+import { check_rs } from '../_/pseudo-rs'
 
 describe('Resp', () =>
 {
@@ -94,38 +94,6 @@ describe('Resp', () =>
 		expect(Resp(400, Intact, new Buffer('abc')).inspect())
 		.deep.eq([ 400, Intact, new Buffer('abc') ])
 	})
-
-	function pseudo_rs (): express$Response & { _: [ any, any, any ] }
-	{
-		var rs =
-		{
-			_: [ null, null, null ],
-
-			status: (status) => { rs._[0] = status },
-			type: (mime) => { rs._[1] = mime },
-			send: (data) => { rs._[2] = data },
-			end:  () => {},
-		}
-
-		/* @flow-off */
-		return rs
-	}
-
-	function expect_rs (rs, status, mime, data)
-	{
-		expect(rs._[0]).eq(status)
-		expect(rs._[1]).eq(mime)
-		expect(rs._[2]).eq(data)
-	}
-
-	function check_rs <T> (resp: $Resp<T>, status, mime, data)
-	{
-		var rs = pseudo_rs()
-
-		resp.toss(rs)
-
-		expect_rs(rs, status, mime, data)
-	}
 
 	it('toss(Resp())', () =>
 	{
