@@ -32,10 +32,13 @@ describe.only('toss', () =>
 			return { data: true }
 		}))
 
-		return request('http://localhost:9001/json', { json: true })
-		.then(body =>
+		return request('http://localhost:9001/json', { resolveWithFullResponse: true })
+		.then(http =>
 		{
-			expect(body).deep.eq({ data: true })
+			expect(http.statusCode).eq(200)
+			expect(http.headers['content-type']).match(/application\/json/)
+			expect(http.body).eq('{"data":true}')
+			expect(JSON.parse(http.body)).deep.eq({ data: true })
 		})
 	})
 })
