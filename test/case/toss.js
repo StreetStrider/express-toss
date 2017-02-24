@@ -7,14 +7,28 @@ import { expect } from 'chai'
 import express from 'express'
 import request from 'request-promise'
 
+var assign = Object.assign
 var load = JSON.parse
 
 
-function request_local_full (uri)
+function request_local_full (options: Object)
 {
-	uri = 'http://localhost:9001' + uri
+	options = assign(
+	{
+		resolveWithFullResponse: true,
+		method: 'GET'
+	}
+	, options,
+	{
+		uri: 'http://localhost:9001' + options.uri
+	})
 
-	return request(uri, { resolveWithFullResponse: true })
+	return request(options)
+}
+
+function request_local (uri: string)
+{
+	return request_local_full({ uri: uri })
 }
 
 
@@ -68,14 +82,14 @@ describe.only('toss', () =>
 		})
 	})
 
-	it('works', () =>
+	it('/json full request', () =>
 	{
 		server.get('/json', method(() =>
 		{
 			return { data: true }
 		}))
 
-		return request_local_full('/json')
+		return request_local('/json')
 		.then(expect_head(200, 'application/json'))
 		.then(expect_body('{"data":true}'))
 		.then(expect_body_json({ data: true }))
