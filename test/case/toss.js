@@ -9,6 +9,15 @@ import request from 'request-promise'
 
 var load = JSON.parse
 
+
+function request_local_full (uri)
+{
+	uri = 'http://localhost:9001' + uri
+
+	return request(uri, { resolveWithFullResponse: true })
+}
+
+
 function expect_head (status, mime)
 {
 	return (http) =>
@@ -66,7 +75,7 @@ describe.only('toss', () =>
 			return { data: true }
 		}))
 
-		return request('http://localhost:9001/json', { resolveWithFullResponse: true })
+		return request_local_full('/json')
 		.then(expect_head(200, 'application/json'))
 		.then(expect_body('{"data":true}'))
 		.then(expect_body_json({ data: true }))
