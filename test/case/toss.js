@@ -98,6 +98,20 @@ describe.only('toss', () =>
 		.then(expect_body_json({ data: true }))
 	})
 
+	it('/text full request', () =>
+	{
+		var uri = '/text'
+
+		server.get(uri, method(() =>
+		{
+			return 'TEXT'
+		}))
+
+		return request_local(uri)
+		.then(expect_head(200, 'text/html'))
+		.then(expect_body('TEXT'))
+	})
+
 	it('PUT /json full request', () =>
 	{
 		var uri = '/json'
