@@ -1,6 +1,6 @@
 /* @flow */
 
-import tosser from '../../toss'
+import tosser from '../../tosser'
 
 import { expect } from 'chai'
 

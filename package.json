@@ -10,7 +10,7 @@
     "node": ">=4"
   },
 
-  "main": "toss.js",
+  "main": "tosser.js",
 
   "files":
   [
