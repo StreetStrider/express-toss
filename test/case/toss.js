@@ -7,6 +7,40 @@ import { expect } from 'chai'
 import express from 'express'
 import request from 'request-promise'
 
+var load = JSON.parse
+
+function expect_head (status, mime)
+{
+	return (http) =>
+	{
+		expect(http.statusCode).eq(status)
+		expect(http.headers['content-type']).match(new RegExp(mime))
+
+		return http
+	}
+}
+
+function expect_body (body)
+{
+	return (http) =>
+	{
+		expect(http.body).eq(body)
+
+		return http
+	}
+}
+
+function expect_body_json (body)
+{
+	return (http) =>
+	{
+		expect(load(http.body)).deep.eq(body)
+
+		return http
+	}
+}
+
+
 // TODO rm only
 describe.only('toss', () =>
 {
@@ -34,21 +68,7 @@ describe.only('toss', () =>
 
 		return request('http://localhost:9001/json', { resolveWithFullResponse: true })
 		.then(expect_head(200, 'application/json'))
-		.then(http =>
-		{
-			expect(http.body).eq('{"data":true}')
-			expect(JSON.parse(http.body)).deep.eq({ data: true })
-		})
+		.then(expect_body('{"data":true}'))
+		.then(expect_body_json({ data: true }))
 	})
 })
-
-function expect_head (status, mime)
-{
-	return (http) =>
-	{
-		expect(http.statusCode).eq(status)
-		expect(http.headers['content-type']).match(new RegExp(mime))
-
-		return http
-	}
-}
