@@ -1,6 +1,7 @@
 /* @flow */
 
 import tosser from '../../tosser'
+import Resp   from '../../Resp'
 
 import { expect } from 'chai'
 
@@ -84,14 +85,64 @@ describe.only('toss', () =>
 
 	it('/json full request', () =>
 	{
-		server.get('/json', method(() =>
+		var uri = '/json'
+
+		server.get(uri, method(() =>
 		{
 			return { data: true }
 		}))
 
-		return request_local('/json')
+		return request_local(uri)
 		.then(expect_head(200, 'application/json'))
 		.then(expect_body('{"data":true}'))
 		.then(expect_body_json({ data: true }))
+	})
+
+	it('PUT /json full request', () =>
+	{
+		var uri = '/json'
+
+		server.put(uri, method(() =>
+		{
+			return { ok: true }
+		}))
+
+		return request_local_full({ uri: uri, method: 'PUT' })
+		.then(expect_head(200, 'application/json'))
+		.then(expect_body('{"ok":true}'))
+		.then(expect_body_json({ ok: true }))
+	})
+
+	it('/promise', () =>
+	{
+		var uri = '/promise'
+
+		server.get(uri, method(() =>
+		{
+			return new Promise(rs =>
+			{
+				setTimeout(() => rs({ promise: true }), 50)
+			})
+		}))
+
+		return request_local(uri)
+		.then(expect_head(200, 'application/json'))
+		.then(expect_body('{"promise":true}'))
+		.then(expect_body_json({ promise: true }))
+	})
+
+	it('/resp Resp(body)', () =>
+	{
+		var uri = '/resp'
+
+		server.get(uri, method(() =>
+		{
+			return Resp({ resp: [ 1, 2, 3 ] })
+		}))
+
+		return request_local(uri)
+		.then(expect_head(200, 'application/json'))
+		.then(expect_body('{"resp":[1,2,3]}'))
+		.then(expect_body_json({ resp: [ 1, 2, 3 ] }))
 	})
 })
