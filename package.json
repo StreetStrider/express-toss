@@ -76,6 +76,15 @@
       "3",
 
     "metalbox":
-      "1"
+      "1",
+
+    "express":
+      "4",
+
+    "request":
+      "2.7",
+
+    "request-promise":
+      "4"
   }
 }
