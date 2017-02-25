@@ -159,4 +159,77 @@ describe.only('toss', () =>
 		.then(expect_body('{"resp":[1,2,3]}'))
 		.then(expect_body_json({ resp: [ 1, 2, 3 ] }))
 	})
+
+	it('/resp Resp(status, body)', () =>
+	{
+		var uri = '/resp-status'
+
+		server.get(uri, method(() =>
+		{
+			return Resp(202, { resp: 'OK' })
+		}))
+
+		return request_local(uri)
+		.then(expect_head(202, 'application/json'))
+		.then(expect_body_json({ resp: 'OK' }))
+	})
+
+	it('/resp Resp(mime, body)', () =>
+	{
+		var uri = '/resp-mime'
+
+		server.get(uri, method(() =>
+		{
+			return Resp('text', 'TEXT-200')
+		}))
+
+		return request_local(uri)
+		.then(expect_head(200, 'text/plain'))
+		.then(expect_body('TEXT-200'))
+	})
+
+	it('/resp Resp(status, mime, body)', () =>
+	{
+		var uri = '/resp-status-mime'
+
+		server.get(uri, method(() =>
+		{
+			return Resp(202, 'text', 'TEXT-202')
+		}))
+
+		return request_local(uri)
+		.then(expect_head(202, 'text/plain'))
+		.then(expect_body('TEXT-202'))
+	})
+
+	it('/resp Resp(status, mime, body)', () =>
+	{
+		var uri = '/resp-status-mime'
+
+		server.get(uri, method(() =>
+		{
+			return Resp(202, 'text', 'TEXT-202')
+		}))
+
+		return request_local(uri)
+		.then(expect_head(202, 'text/plain'))
+		.then(expect_body('TEXT-202'))
+	})
+
+	it('/resp-promise Resp with promise', () =>
+	{
+		var uri = '/resp-promise'
+
+		server.get(uri, method(() =>
+		{
+			return new Promise(rs =>
+			{
+				setTimeout(() => rs(Resp({ promise: true })), 50)
+			})
+		}))
+
+		return request_local(uri)
+		.then(expect_head(200, 'application/json'))
+		.then(expect_body_json({ promise: true }))
+	})
 })
