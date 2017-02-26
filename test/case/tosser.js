@@ -337,4 +337,47 @@ describe.only('toss', () =>
 			]))
 		})
 	})
+
+	it.only('/throw Error', () =>
+	{
+		var uri = '/throw-error'
+		var uri_debug = uri + '/debug'
+
+		var error = Error('throw_error')
+
+		server.get(uri, method(() =>
+		{
+			throw error
+		}))
+
+		server.get(uri_debug, method_debug(() =>
+		{
+			throw error
+		}))
+
+		return request_local_full({ uri: uri, simple: false })
+		.then(expect_head(500, 'application/json'))
+		.then(expect_body_json({ error: 'internal' }))
+		.then(expect_console(spy_console_error,
+		[
+			[ 'toss: non-protocol attempt, mask as Internal()' ],
+			[ error ]
+		]))
+		.then(() =>
+		{
+			return request_local_full({ uri: uri_debug, simple: false })
+			.then(expect_head(500, 'application/json'))
+			.then(expect_body_json_wrong(
+			{
+				error: 'debug',
+				data:
+				{ name: 'Error', message: 'throw_error' }
+			}))
+			.then(expect_console(spy_console_error,
+			[
+				[ 'toss: non-protocol error, upgrade to Debug(error)' ],
+				[ error ]
+			]))
+		})
+	})
 })
