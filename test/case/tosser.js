@@ -232,4 +232,17 @@ describe.only('toss', () =>
 		.then(expect_head(200, 'application/json'))
 		.then(expect_body_json({ promise: true }))
 	})
+
+	it('/resp Resp(status = 400)', () =>
+	{
+		var uri = '/resp-status-400'
+
+		server.get(uri, method(() =>
+		{
+			return Resp(400, '')
+		}))
+
+		return request_local_full({ uri: uri, simple: false })
+		.then(expect_head(400, 'text/html'))
+	})
 })
