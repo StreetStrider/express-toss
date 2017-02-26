@@ -10,5 +10,6 @@ module.exports =
 	{
 		'no-unused-expressions': 0,
 		'max-statements': 0,
+		'max-len': 0,
 	},
 }

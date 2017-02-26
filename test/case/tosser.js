@@ -2,6 +2,7 @@
 
 import tosser from '../../tosser'
 import Resp   from '../../Resp'
+import Debug  from '../../Wrong/Debug'
 
 import { inspect } from 'util'
 
@@ -351,7 +352,38 @@ describe.only('toss', () =>
 		expect_console(spy_console_error,
 		[
 			[ 'toss: non-protocol error, upgrade to Debug(error)' ],
-			[ new Error('resolve_with_error') ] // loose
+			[ new Error('resolve_with_error') ]
+		])
+	)))
+
+	it('throw non-Error, non-Wrong', test_debug_difference(
+	() =>
+	{
+		// eslint-disable-next-line no-throw-literal
+		throw { literal: true }
+	},
+	compose(
+		expect_head(500, 'application/json'),
+		expect_body_json({ error: 'internal' }),
+		expect_console(spy_console_error,
+		[
+			[ 'toss: rejection with nor Error, nor Wrong, upgrade to Debug(rejection)' ],
+			[ { literal: true } ],
+			[ 'toss: Debug() attempt, mask as Internal()' ],
+			[ Debug() ],
+		])
+	),
+	compose(
+		expect_head(500, 'application/json'),
+		expect_body_json(
+		{
+			error: 'debug',
+			data: { literal: true }
+		}),
+		expect_console(spy_console_error,
+		[
+			[ 'toss: rejection with nor Error, nor Wrong, upgrade to Debug(rejection)' ],
+			[ { literal: true } ],
 		])
 	)))
 
