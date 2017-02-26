@@ -11,7 +11,6 @@ import request from 'request-promise'
 var assign = Object.assign
 var load = JSON.parse
 
-
 function request_local_full (options: Object)
 {
 	options = assign(
@@ -64,12 +63,30 @@ function expect_body_json (body)
 	}
 }
 
+function expect_body_json_wrong (body)
+{
+	return (http) =>
+	{
+		var json = load(http.body)
+
+		expect(json && json.data && json.data.stack).a('string')
+		delete json.data.stack
+
+		expect(json).deep.eq(body)
+
+		return http
+	}
+}
+
 
 // TODO rm only
 describe.only('toss', () =>
 {
 	var toss = tosser()
 	var method = toss.method
+
+	var toss_debug = tosser({ debug: true })
+	var method_debug = toss_debug.method
 
 	var server
 
@@ -244,5 +261,49 @@ describe.only('toss', () =>
 
 		return request_local_full({ uri: uri, simple: false })
 		.then(expect_head(400, 'text/html'))
+	})
+
+	it('/resp Resp(status = 400)', () =>
+	{
+		var uri = '/resp-status-400'
+
+		server.get(uri, method(() =>
+		{
+			return Resp(400, '')
+		}))
+
+		return request_local_full({ uri: uri, simple: false })
+		.then(expect_head(400, 'text/html'))
+	})
+
+	it.only('/resp Error', () =>
+	{
+		var uri = '/resp-error'
+		var uri_debug = uri + '/debug'
+
+		server.get(uri, method(() =>
+		{
+			return Error('resolve_with_error')
+		}))
+
+		server.get(uri_debug, method_debug(() =>
+		{
+			return Error('resolve_with_error')
+		}))
+
+		return request_local_full({ uri: uri, simple: false })
+		.then(expect_head(500, 'application/json'))
+		.then(expect_body_json({ error: 'internal' }))
+		.then(() =>
+		{
+			return request_local_full({ uri: uri_debug, simple: false })
+			.then(expect_head(500, 'application/json'))
+			.then(expect_body_json_wrong(
+			{
+				error: 'debug',
+				data:
+				{ name: 'Error', message: 'resolve_with_error' }
+			}))
+		})
 	})
 })
