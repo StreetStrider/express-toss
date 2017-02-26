@@ -95,15 +95,20 @@ function expect_console (spy, msgs)
 {
 	return (it) =>
 	{
-		var calls = spy
-		.getCalls()
-		.map(call => call.args)
+		try
+		{
+			var calls = spy
+			.getCalls()
+			.map(call => call.args)
 
-		expect(calls).deep.eq(msgs)
+			expect(calls).deep.eq(msgs)
 
-		spy.reset()
-
-		return it
+			return it
+		}
+		finally
+		{
+			spy.reset()
+		}
 	}
 }
 
