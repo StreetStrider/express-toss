@@ -75,6 +75,9 @@
     "chai":
       "3",
 
+    "sinon":
+      "1",
+
     "metalbox":
       "1",
 

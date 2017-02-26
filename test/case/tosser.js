@@ -4,6 +4,7 @@ import tosser from '../../tosser'
 import Resp   from '../../Resp'
 
 import { expect } from 'chai'
+import sinon from 'sinon'
 
 import express from 'express'
 import request from 'request-promise'
@@ -78,6 +79,22 @@ function expect_body_json_wrong (body)
 	}
 }
 
+function expect_console (spy, msgs)
+{
+	return (it) =>
+	{
+		var calls = spy
+		.getCalls()
+		.map(call => call.args)
+
+		expect(calls).deep.eq(msgs)
+
+		spy.reset()
+
+		return it
+	}
+}
+
 
 // TODO rm only
 describe.only('toss', () =>
@@ -87,6 +104,8 @@ describe.only('toss', () =>
 
 	var toss_debug = tosser({ debug: true })
 	var method_debug = toss_debug.method
+
+	var spy_console_error = sinon.spy(console, 'error')
 
 	var server
 
@@ -281,19 +300,26 @@ describe.only('toss', () =>
 		var uri = '/resp-error'
 		var uri_debug = uri + '/debug'
 
+		var error = Error('resolve_with_error')
+
 		server.get(uri, method(() =>
 		{
-			return Error('resolve_with_error')
+			return error
 		}))
 
 		server.get(uri_debug, method_debug(() =>
 		{
-			return Error('resolve_with_error')
+			return error
 		}))
 
 		return request_local_full({ uri: uri, simple: false })
 		.then(expect_head(500, 'application/json'))
 		.then(expect_body_json({ error: 'internal' }))
+		.then(expect_console(spy_console_error,
+		[
+			[ 'toss: non-protocol attempt, mask as Internal()' ],
+			[ error ]
+		]))
 		.then(() =>
 		{
 			return request_local_full({ uri: uri_debug, simple: false })
@@ -304,6 +330,11 @@ describe.only('toss', () =>
 				data:
 				{ name: 'Error', message: 'resolve_with_error' }
 			}))
+			.then(expect_console(spy_console_error,
+			[
+				[ 'toss: non-protocol error, upgrade to Debug(error)' ],
+				[ error ]
+			]))
 		})
 	})
 })
