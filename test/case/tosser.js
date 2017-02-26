@@ -9,6 +9,7 @@ import { generate as random } from 'randomstring'
 
 import express from 'express'
 import request from 'request-promise'
+import { flow as compose } from 'lodash'
 
 var noop = () => {}
 var assign = Object.assign
@@ -116,18 +117,17 @@ describe.only('toss', () =>
 	var toss_debug = tosser({ debug: true })
 	var method_debug = toss_debug.method
 
-	var save_console
-	var spy_console_error
+	{
+		var save_console = console.error
+		/* @flow-off*/
+		console.error = noop
+	}
+	var spy_console_error = sinon.spy(console, 'error')
 
 	var server
 
 	before(() =>
 	{
-		save_console = console.error
-		/* @flow-off*/
-		console.error = noop
-		spy_console_error = sinon.spy(console, 'error')
-
 		server = express()
 
 		return new Promise(rs =>
@@ -283,87 +283,91 @@ describe.only('toss', () =>
 		.then(expect_head(400, 'text/html'))
 	}))
 
-	it('resp Error', with_uri(uri =>
+
+	/* test rejections */
+	function test_debug_difference (handler, strict_check, debug_check)
 	{
-		var uri_debug = uri + '/debug'
+		/* nonlocal server */
+		/* nonlocal method */
+		/* nonlocal method_debug */
+		/* nonlocal request_local_full */
 
-		var error = Error('resolve_with_error')
-
-		server.get(uri, method(() =>
+		return with_uri(uri =>
 		{
-			return error
-		}))
+			var uri_debug = uri + '/debug'
 
-		server.get(uri_debug, method_debug(() =>
-		{
-			return error
-		}))
+			server.get(uri, method(handler))
+			server.get(uri_debug, method_debug(handler))
 
-		return request_local_full({ uri: uri, simple: false })
-		.then(expect_head(500, 'application/json'))
-		.then(expect_body_json({ error: 'internal' }))
-		.then(expect_console(spy_console_error,
+			return Promise.resolve()
+			.then(() =>
+			{
+				return request_local_full({ uri: uri, simple: false })
+				.then(strict_check)
+			})
+			.then(() =>
+			{
+				return request_local_full({ uri: uri_debug, simple: false })
+				.then(debug_check)
+			})
+		})
+	}
+
+	it('resp Error', test_debug_difference(
+	() =>
+	{
+		return new Error('resolve_with_error')
+	},
+	compose(
+		expect_head(500, 'application/json'),
+		expect_body_json({ error: 'internal' }),
+		expect_console(spy_console_error,
 		[
 			[ 'toss: non-protocol attempt, mask as Internal()' ],
-			[ error ]
-		]))
-		.then(() =>
+			[ new Error('resolve_with_error') ]
+		])
+	),
+	compose(
+		expect_head(500, 'application/json'),
+		expect_body_json_wrong(
 		{
-			return request_local_full({ uri: uri_debug, simple: false })
-			.then(expect_head(500, 'application/json'))
-			.then(expect_body_json_wrong(
-			{
-				error: 'debug',
-				data:
-				{ name: 'Error', message: 'resolve_with_error' }
-			}))
-			.then(expect_console(spy_console_error,
-			[
-				[ 'toss: non-protocol error, upgrade to Debug(error)' ],
-				[ error ]
-			]))
-		})
-	}))
+			error: 'debug',
+			data:
+			{ name: 'Error', message: 'resolve_with_error' }
+		}),
+		expect_console(spy_console_error,
+		[
+			[ 'toss: non-protocol error, upgrade to Debug(error)' ],
+			[ new Error('resolve_with_error') ]
+		])
+	)))
 
-	it('throw Error', with_uri(uri =>
+	it('throw Error', test_debug_difference(
+	() =>
 	{
-		var uri_debug = uri + '/debug'
-
-		var error = Error('throw_error')
-
-		server.get(uri, method(() =>
-		{
-			throw error
-		}))
-
-		server.get(uri_debug, method_debug(() =>
-		{
-			throw error
-		}))
-
-		return request_local_full({ uri: uri, simple: false })
-		.then(expect_head(500, 'application/json'))
-		.then(expect_body_json({ error: 'internal' }))
-		.then(expect_console(spy_console_error,
+		throw new Error('throw_error')
+	},
+	compose(
+		expect_head(500, 'application/json'),
+		expect_body_json({ error: 'internal' }),
+		expect_console(spy_console_error,
 		[
 			[ 'toss: non-protocol attempt, mask as Internal()' ],
-			[ error ]
-		]))
-		.then(() =>
+			[ new Error('throw_error') ]
+		])
+	),
+	compose(
+		expect_head(500, 'application/json'),
+		expect_body_json_wrong(
 		{
-			return request_local_full({ uri: uri_debug, simple: false })
-			.then(expect_head(500, 'application/json'))
-			.then(expect_body_json_wrong(
-			{
-				error: 'debug',
-				data:
-				{ name: 'Error', message: 'throw_error' }
-			}))
-			.then(expect_console(spy_console_error,
-			[
-				[ 'toss: non-protocol error, upgrade to Debug(error)' ],
-				[ error ]
-			]))
-		})
-	}))
+			error: 'debug',
+			data:
+			{ name: 'Error', message: 'throw_error' }
+		}),
+		expect_console(spy_console_error,
+		[
+			[ 'toss: non-protocol error, upgrade to Debug(error)' ],
+			[ new Error('throw_error') ]
+		])
+	)))
 })

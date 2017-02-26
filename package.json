@@ -91,6 +91,9 @@
       "2.7",
 
     "request-promise":
+      "4",
+
+    "lodash":
       "4"
   }
 }
