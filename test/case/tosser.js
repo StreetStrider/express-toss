@@ -3,6 +3,8 @@
 import tosser from '../../tosser'
 import Resp   from '../../Resp'
 
+import { inspect } from 'util'
+
 import { expect } from 'chai'
 import sinon from 'sinon'
 import { generate as random } from 'randomstring'
@@ -91,7 +93,7 @@ function expect_body_json_wrong (body)
 	}
 }
 
-function expect_console (spy, msgs)
+function expect_console (spy, args_s)
 {
 	return (it) =>
 	{
@@ -101,7 +103,7 @@ function expect_console (spy, msgs)
 			.getCalls()
 			.map(call => call.args)
 
-			expect(calls).deep.eq(msgs)
+			expect(marshall(calls)).deep.eq(marshall(args_s))
 
 			return it
 		}
@@ -109,6 +111,11 @@ function expect_console (spy, msgs)
 		{
 			spy.reset()
 		}
+	}
+
+	function marshall (args_s)
+	{
+		return args_s.map(args => inspect(args))
 	}
 }
 
@@ -330,7 +337,7 @@ describe.only('toss', () =>
 		expect_console(spy_console_error,
 		[
 			[ 'toss: non-protocol attempt, mask as Internal()' ],
-			[ new Error('resolve_with_error') ] // loose
+			[ new Error('resolve_with_error') ]
 		])
 	),
 	compose(
@@ -359,7 +366,7 @@ describe.only('toss', () =>
 		expect_console(spy_console_error,
 		[
 			[ 'toss: non-protocol attempt, mask as Internal()' ],
-			[ new Error('throw_error') ] // loose
+			[ new Error('throw_error') ]
 		])
 	),
 	compose(
@@ -373,7 +380,7 @@ describe.only('toss', () =>
 		expect_console(spy_console_error,
 		[
 			[ 'toss: non-protocol error, upgrade to Debug(error)' ],
-			[ new Error('throw_error') ] // loose
+			[ new Error('throw_error') ]
 		])
 	)))
 })
