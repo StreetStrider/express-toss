@@ -5,6 +5,7 @@ import Resp   from '../../Resp'
 
 import { expect } from 'chai'
 import sinon from 'sinon'
+import { generate as random } from 'randomstring'
 
 import express from 'express'
 import request from 'request-promise'
@@ -12,6 +13,15 @@ import request from 'request-promise'
 var noop = () => {}
 var assign = Object.assign
 var load = JSON.parse
+
+function with_uri (fn)
+{
+	return function ()
+	{
+		var uri = '/' + random(16)
+		return fn.call(this, uri)
+	}
+}
 
 function request_local_full (options: Object)
 {
@@ -132,10 +142,8 @@ describe.only('toss', () =>
 		console.error = save_console
 	})
 
-	it('resp json', () =>
+	it('resp json', with_uri(uri =>
 	{
-		var uri = '/json'
-
 		server.get(uri, method(() =>
 		{
 			return { data: true }
@@ -145,12 +153,10 @@ describe.only('toss', () =>
 		.then(expect_head(200, 'application/json'))
 		.then(expect_body('{"data":true}'))
 		.then(expect_body_json({ data: true }))
-	})
+	}))
 
-	it('resp text', () =>
+	it('resp text', with_uri(uri =>
 	{
-		var uri = '/text'
-
 		server.get(uri, method(() =>
 		{
 			return 'TEXT'
@@ -159,12 +165,10 @@ describe.only('toss', () =>
 		return request_local(uri)
 		.then(expect_head(200, 'text/html'))
 		.then(expect_body('TEXT'))
-	})
+	}))
 
-	it('resp PUT json', () =>
+	it('resp PUT json', with_uri(uri =>
 	{
-		var uri = '/json'
-
 		server.put(uri, method(() =>
 		{
 			return { ok: true }
@@ -174,12 +178,10 @@ describe.only('toss', () =>
 		.then(expect_head(200, 'application/json'))
 		.then(expect_body('{"ok":true}'))
 		.then(expect_body_json({ ok: true }))
-	})
+	}))
 
-	it('resp with promise', () =>
+	it('resp with promise', with_uri(uri =>
 	{
-		var uri = '/promise'
-
 		server.get(uri, method(() =>
 		{
 			return new Promise(rs =>
@@ -192,12 +194,10 @@ describe.only('toss', () =>
 		.then(expect_head(200, 'application/json'))
 		.then(expect_body('{"promise":true}'))
 		.then(expect_body_json({ promise: true }))
-	})
+	}))
 
-	it('resp Resp(body)', () =>
+	it('resp Resp(body)', with_uri(uri =>
 	{
-		var uri = '/resp'
-
 		server.get(uri, method(() =>
 		{
 			return Resp({ resp: [ 1, 2, 3 ] })
@@ -207,12 +207,10 @@ describe.only('toss', () =>
 		.then(expect_head(200, 'application/json'))
 		.then(expect_body('{"resp":[1,2,3]}'))
 		.then(expect_body_json({ resp: [ 1, 2, 3 ] }))
-	})
+	}))
 
-	it('resp Resp(status, body)', () =>
+	it('resp Resp(status, body)', with_uri(uri =>
 	{
-		var uri = '/resp-status'
-
 		server.get(uri, method(() =>
 		{
 			return Resp(202, { resp: 'OK' })
@@ -221,12 +219,10 @@ describe.only('toss', () =>
 		return request_local(uri)
 		.then(expect_head(202, 'application/json'))
 		.then(expect_body_json({ resp: 'OK' }))
-	})
+	}))
 
-	it('resp Resp(mime, body)', () =>
+	it('resp Resp(mime, body)', with_uri(uri =>
 	{
-		var uri = '/resp-mime'
-
 		server.get(uri, method(() =>
 		{
 			return Resp('text', 'TEXT-200')
@@ -235,12 +231,10 @@ describe.only('toss', () =>
 		return request_local(uri)
 		.then(expect_head(200, 'text/plain'))
 		.then(expect_body('TEXT-200'))
-	})
+	}))
 
-	it('resp Resp(status, mime, body)', () =>
+	it('resp Resp(status, mime, body)', with_uri(uri =>
 	{
-		var uri = '/resp-status-mime'
-
 		server.get(uri, method(() =>
 		{
 			return Resp(202, 'text', 'TEXT-202')
@@ -249,12 +243,10 @@ describe.only('toss', () =>
 		return request_local(uri)
 		.then(expect_head(202, 'text/plain'))
 		.then(expect_body('TEXT-202'))
-	})
+	}))
 
-	it('resp Resp(status, mime, body)', () =>
+	it('resp Resp(status, mime, body)', with_uri(uri =>
 	{
-		var uri = '/resp-status-mime'
-
 		server.get(uri, method(() =>
 		{
 			return Resp(202, 'text', 'TEXT-202')
@@ -263,12 +255,10 @@ describe.only('toss', () =>
 		return request_local(uri)
 		.then(expect_head(202, 'text/plain'))
 		.then(expect_body('TEXT-202'))
-	})
+	}))
 
-	it('resp (Resp with promise)', () =>
+	it('resp (Resp with promise)', with_uri(uri =>
 	{
-		var uri = '/resp-promise'
-
 		server.get(uri, method(() =>
 		{
 			return new Promise(rs =>
@@ -280,12 +270,10 @@ describe.only('toss', () =>
 		return request_local(uri)
 		.then(expect_head(200, 'application/json'))
 		.then(expect_body_json({ promise: true }))
-	})
+	}))
 
-	it('resp Resp(status = 400)', () =>
+	it('resp Resp(status = 400)', with_uri(uri =>
 	{
-		var uri = '/resp-status-400'
-
 		server.get(uri, method(() =>
 		{
 			return Resp(400, '')
@@ -293,11 +281,10 @@ describe.only('toss', () =>
 
 		return request_local_full({ uri: uri, simple: false })
 		.then(expect_head(400, 'text/html'))
-	})
+	}))
 
-	it('resp Error', () =>
+	it('resp Error', with_uri(uri =>
 	{
-		var uri = '/resp-error'
 		var uri_debug = uri + '/debug'
 
 		var error = Error('resolve_with_error')
@@ -336,11 +323,10 @@ describe.only('toss', () =>
 				[ error ]
 			]))
 		})
-	})
+	}))
 
-	it('throw Error', () =>
+	it('throw Error', with_uri(uri =>
 	{
-		var uri = '/throw-error'
 		var uri_debug = uri + '/debug'
 
 		var error = Error('throw_error')
@@ -379,5 +365,5 @@ describe.only('toss', () =>
 				[ error ]
 			]))
 		})
-	})
+	}))
 })
