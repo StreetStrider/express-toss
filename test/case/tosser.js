@@ -117,6 +117,7 @@ describe.only('toss', () =>
 	var toss_debug = tosser({ debug: true })
 	var method_debug = toss_debug.method
 
+	if (1)
 	{
 		var save_console = console.error
 		/* @flow-off*/
@@ -324,7 +325,7 @@ describe.only('toss', () =>
 		expect_console(spy_console_error,
 		[
 			[ 'toss: non-protocol attempt, mask as Internal()' ],
-			[ new Error('resolve_with_error') ]
+			[ new Error('resolve_with_error') ] // loose
 		])
 	),
 	compose(
@@ -338,7 +339,7 @@ describe.only('toss', () =>
 		expect_console(spy_console_error,
 		[
 			[ 'toss: non-protocol error, upgrade to Debug(error)' ],
-			[ new Error('resolve_with_error') ]
+			[ new Error('resolve_with_error') ] // loose
 		])
 	)))
 
@@ -353,7 +354,7 @@ describe.only('toss', () =>
 		expect_console(spy_console_error,
 		[
 			[ 'toss: non-protocol attempt, mask as Internal()' ],
-			[ new Error('throw_error') ]
+			[ new Error('throw_error') ] // loose
 		])
 	),
 	compose(
@@ -367,7 +368,7 @@ describe.only('toss', () =>
 		expect_console(spy_console_error,
 		[
 			[ 'toss: non-protocol error, upgrade to Debug(error)' ],
-			[ new Error('throw_error') ]
+			[ new Error('throw_error') ] // loose
 		])
 	)))
 })
