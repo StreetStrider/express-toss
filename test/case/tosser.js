@@ -356,6 +356,35 @@ describe.only('toss', () =>
 		])
 	)))
 
+	it('resp resolve(Error)', test_debug_difference(
+	() =>
+	{
+		return Promise.resolve(new Error('promise_resolve_with_error'))
+	},
+	compose(
+		expect_head(500, 'application/json'),
+		expect_body_json({ error: 'internal' }),
+		expect_console(spy_console_error,
+		[
+			[ 'toss: non-protocol attempt, mask as Internal()' ],
+			[ new Error('promise_resolve_with_error') ]
+		])
+	),
+	compose(
+		expect_head(500, 'application/json'),
+		expect_body_json_wrong(
+		{
+			error: 'debug',
+			data:
+			{ name: 'Error', message: 'promise_resolve_with_error' }
+		}),
+		expect_console(spy_console_error,
+		[
+			[ 'toss: non-protocol error, upgrade to Debug(error)' ],
+			[ new Error('promise_resolve_with_error') ]
+		])
+	)))
+
 	it('throw non-Error, non-Wrong', test_debug_difference(
 	() =>
 	{
@@ -387,6 +416,36 @@ describe.only('toss', () =>
 		])
 	)))
 
+	it('reject non-Error, non-Wrong', test_debug_difference(
+	() =>
+	{
+		return Promise.reject({ promise_literal: true })
+	},
+	compose(
+		expect_head(500, 'application/json'),
+		expect_body_json({ error: 'internal' }),
+		expect_console(spy_console_error,
+		[
+			[ 'toss: rejection with nor Error, nor Wrong, upgrade to Debug(rejection)' ],
+			[ { promise_literal: true } ],
+			[ 'toss: Debug() attempt, mask as Internal()' ],
+			[ Debug() ],
+		])
+	),
+	compose(
+		expect_head(500, 'application/json'),
+		expect_body_json(
+		{
+			error: 'debug',
+			data: { promise_literal: true }
+		}),
+		expect_console(spy_console_error,
+		[
+			[ 'toss: rejection with nor Error, nor Wrong, upgrade to Debug(rejection)' ],
+			[ { promise_literal: true } ],
+		])
+	)))
+
 	it('throw Error', test_debug_difference(
 	() =>
 	{
@@ -413,6 +472,35 @@ describe.only('toss', () =>
 		[
 			[ 'toss: non-protocol error, upgrade to Debug(error)' ],
 			[ new Error('throw_error') ]
+		])
+	)))
+
+	it('resp reject(Error)', test_debug_difference(
+	() =>
+	{
+		return Promise.reject(new Error('reject_error'))
+	},
+	compose(
+		expect_head(500, 'application/json'),
+		expect_body_json({ error: 'internal' }),
+		expect_console(spy_console_error,
+		[
+			[ 'toss: non-protocol attempt, mask as Internal()' ],
+			[ new Error('reject_error') ]
+		])
+	),
+	compose(
+		expect_head(500, 'application/json'),
+		expect_body_json_wrong(
+		{
+			error: 'debug',
+			data:
+			{ name: 'Error', message: 'reject_error' }
+		}),
+		expect_console(spy_console_error,
+		[
+			[ 'toss: non-protocol error, upgrade to Debug(error)' ],
+			[ new Error('reject_error') ]
 		])
 	)))
 })
