@@ -295,7 +295,7 @@ describe.only('toss', () =>
 		.then(expect_head(400, 'text/html'))
 	})
 
-	it.only('/resp Error', () =>
+	it('/resp Error', () =>
 	{
 		var uri = '/resp-error'
 		var uri_debug = uri + '/debug'
@@ -338,7 +338,7 @@ describe.only('toss', () =>
 		})
 	})
 
-	it.only('/throw Error', () =>
+	it('/throw Error', () =>
 	{
 		var uri = '/throw-error'
 		var uri_debug = uri + '/debug'
