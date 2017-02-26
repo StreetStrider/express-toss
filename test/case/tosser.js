@@ -9,6 +9,7 @@ import sinon from 'sinon'
 import express from 'express'
 import request from 'request-promise'
 
+var noop = () => {}
 var assign = Object.assign
 var load = JSON.parse
 
@@ -105,18 +106,30 @@ describe.only('toss', () =>
 	var toss_debug = tosser({ debug: true })
 	var method_debug = toss_debug.method
 
-	var spy_console_error = sinon.spy(console, 'error')
+	var save_console
+	var spy_console_error
 
 	var server
 
 	before(() =>
 	{
+		save_console = console.error
+		/* @flow-off*/
+		console.error = noop
+		spy_console_error = sinon.spy(console, 'error')
+
 		server = express()
 
 		return new Promise(rs =>
 		{
 			server.listen(9001, () => rs())
 		})
+	})
+
+	after(() =>
+	{
+		/* @flow-off */
+		console.error = save_console
 	})
 
 	it('/json full request', () =>
