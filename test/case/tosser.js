@@ -132,7 +132,7 @@ describe.only('toss', () =>
 		console.error = save_console
 	})
 
-	it('/json full request', () =>
+	it('resp json', () =>
 	{
 		var uri = '/json'
 
@@ -147,7 +147,7 @@ describe.only('toss', () =>
 		.then(expect_body_json({ data: true }))
 	})
 
-	it('/text full request', () =>
+	it('resp text', () =>
 	{
 		var uri = '/text'
 
@@ -161,7 +161,7 @@ describe.only('toss', () =>
 		.then(expect_body('TEXT'))
 	})
 
-	it('PUT /json full request', () =>
+	it('resp PUT json', () =>
 	{
 		var uri = '/json'
 
@@ -176,7 +176,7 @@ describe.only('toss', () =>
 		.then(expect_body_json({ ok: true }))
 	})
 
-	it('/promise', () =>
+	it('resp with promise', () =>
 	{
 		var uri = '/promise'
 
@@ -194,7 +194,7 @@ describe.only('toss', () =>
 		.then(expect_body_json({ promise: true }))
 	})
 
-	it('/resp Resp(body)', () =>
+	it('resp Resp(body)', () =>
 	{
 		var uri = '/resp'
 
@@ -209,7 +209,7 @@ describe.only('toss', () =>
 		.then(expect_body_json({ resp: [ 1, 2, 3 ] }))
 	})
 
-	it('/resp Resp(status, body)', () =>
+	it('resp Resp(status, body)', () =>
 	{
 		var uri = '/resp-status'
 
@@ -223,7 +223,7 @@ describe.only('toss', () =>
 		.then(expect_body_json({ resp: 'OK' }))
 	})
 
-	it('/resp Resp(mime, body)', () =>
+	it('resp Resp(mime, body)', () =>
 	{
 		var uri = '/resp-mime'
 
@@ -237,7 +237,7 @@ describe.only('toss', () =>
 		.then(expect_body('TEXT-200'))
 	})
 
-	it('/resp Resp(status, mime, body)', () =>
+	it('resp Resp(status, mime, body)', () =>
 	{
 		var uri = '/resp-status-mime'
 
@@ -251,7 +251,7 @@ describe.only('toss', () =>
 		.then(expect_body('TEXT-202'))
 	})
 
-	it('/resp Resp(status, mime, body)', () =>
+	it('resp Resp(status, mime, body)', () =>
 	{
 		var uri = '/resp-status-mime'
 
@@ -265,7 +265,7 @@ describe.only('toss', () =>
 		.then(expect_body('TEXT-202'))
 	})
 
-	it('/resp-promise Resp with promise', () =>
+	it('resp (Resp with promise)', () =>
 	{
 		var uri = '/resp-promise'
 
@@ -282,7 +282,7 @@ describe.only('toss', () =>
 		.then(expect_body_json({ promise: true }))
 	})
 
-	it('/resp Resp(status = 400)', () =>
+	it('resp Resp(status = 400)', () =>
 	{
 		var uri = '/resp-status-400'
 
@@ -295,20 +295,7 @@ describe.only('toss', () =>
 		.then(expect_head(400, 'text/html'))
 	})
 
-	it('/resp Resp(status = 400)', () =>
-	{
-		var uri = '/resp-status-400'
-
-		server.get(uri, method(() =>
-		{
-			return Resp(400, '')
-		}))
-
-		return request_local_full({ uri: uri, simple: false })
-		.then(expect_head(400, 'text/html'))
-	})
-
-	it('/resp Error', () =>
+	it('resp Error', () =>
 	{
 		var uri = '/resp-error'
 		var uri_debug = uri + '/debug'
@@ -351,7 +338,7 @@ describe.only('toss', () =>
 		})
 	})
 
-	it('/throw Error', () =>
+	it('throw Error', () =>
 	{
 		var uri = '/throw-error'
 		var uri_debug = uri + '/debug'
