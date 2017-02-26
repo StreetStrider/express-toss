@@ -2,6 +2,7 @@
 
 import toss from '../../toss-to'
 import Resp from '../../Resp'
+import Wrong from '../../Wrong'
 
 import { pseudo_rs, expect_rs } from '../_/pseudo-rs'
 
@@ -50,5 +51,15 @@ describe('toss-to', () =>
 		toss(Resp(200, 'json', 'body'), rs)
 
 		expect_rs(rs, 200, 'json', 'body')
+	})
+
+	it('toss(wrong)', () =>
+	{
+		var rs = pseudo_rs()
+		var w = Wrong('some_error')
+
+		toss(w({ detail: true }), rs)
+
+		expect_rs(rs, 400, 'json', { error: 'some_error', data: { detail: true }})
 	})
 })
