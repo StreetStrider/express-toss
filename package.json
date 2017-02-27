@@ -32,7 +32,10 @@
       "flow check",
 
     "mocha":
-      "npm run npm && mocha --recursive release/npm/dist/test/case",
+      "npm run npm &&                 mocha    --recursive release/npm/dist/test/case",
+
+    "cover":
+      "npm run npm && istanbul cover _mocha -- --recursive release/npm/dist/test/case",
 
     "test":
       "npm run st && npm run flow && npm run mocha",
@@ -77,6 +80,9 @@
 
     "sinon":
       "1",
+
+    "istanbul":
+      "*",
 
     "randomstring":
       "1",

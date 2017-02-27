@@ -123,8 +123,7 @@ function expect_console (spy, args_s)
 }
 
 
-// TODO rm only
-describe.only('toss', () =>
+describe('toss', () =>
 {
 	var toss = tosser()
 	var method = toss.method
