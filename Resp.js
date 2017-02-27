@@ -18,11 +18,14 @@
 
 ; export type Resp<Body> =
 {
+	inspect (): string,
 	toJSON (): [ Status, Intacted<Mime>, Intacted<Body> ],
 	toss (rs: express$Response): void
 }
 
 ;
+
+import { inspect } from 'util'
 
 export default $Resp
 
@@ -61,14 +64,51 @@ function $Resp <Body> (/* :: ...resp: RespTuple<Body> */): Resp<Body>
 
 	return 0,
 	{
+		inspect: () =>
+		{
+			var seq = [ status ]
+
+			// if (mime !== Intact)
+			if (typeof mime === 'string')
+			{
+				seq.push(mime)
+			}
+
+			if (body !== Intact)
+			{
+				var body_repr: string = ''
+
+				if (typeof body === 'string')
+				{
+					body_repr = body
+				}
+				else
+				{
+					body_repr = inspect(body)
+				}
+
+				if (body_repr.length > 51)
+				{
+					body_repr = body_repr.slice(0, 25)
+					+ '…'    + body_repr.slice(-25)
+				}
+
+				seq.push(body_repr)
+			}
+
+			var seq_repr: string = seq.join(', ')
+
+			return `[Resp: ${seq_repr}]`
+		},
+
 		toJSON: () => [ status, mime, body ],
 
 		toss: (rs: express$Response) =>
 		{
 			rs.status(status)
 
-			if (typeof mime === 'string')
 			// if (mime !== Intact)
+			if (typeof mime === 'string')
 			{
 				rs.type(mime)
 			}

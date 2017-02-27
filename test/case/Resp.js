@@ -3,6 +3,7 @@
 import Resp from '../../Resp'
 
 import { expect } from 'chai'
+import { repeat } from 'lodash'
 
 import { expect_resp } from '../_/pseudo-rs'
 
@@ -126,5 +127,47 @@ describe('Resp', () =>
 		expect_resp(Resp(400, 'json', 200), 400, 'json', 200)
 		/* @flow-off */
 		expect_resp(Resp(400, Intact, 'body'), 400, null, 'body')
+	})
+
+	it('inspect(body)', () =>
+	{
+		expect(Resp('body').inspect()).eq('[Resp: 200, body]')
+	})
+
+	it('inspect(long body)', () =>
+	{
+		expect(Resp(repeat('_', 100)).inspect())
+		.eq(`[Resp: 200, ${ repeat('_', 25) + '…' + repeat('_', 25) }]`)
+	})
+
+	it('inspect(status, body)', () =>
+	{
+		expect(Resp(201, 'body').inspect()).eq('[Resp: 201, body]')
+	})
+
+	it('inspect(mime, body)', () =>
+	{
+		expect(Resp('text', 'body').inspect()).eq('[Resp: 200, text, body]')
+	})
+
+	it('inspect(status, mime, body)', () =>
+	{
+		expect(Resp(201, 'text', 'body').inspect()).eq('[Resp: 201, text, body]')
+	})
+
+	it('inspect(object)', () =>
+	{
+		expect(Resp({ x: 1 }).inspect()).eq('[Resp: 200, { x: 1 }]')
+	})
+
+	it('inspect(array)', () =>
+	{
+		expect(Resp([ 1, 2, 3 ]).inspect()).eq('[Resp: 200, [ 1, 2, 3 ]]')
+	})
+
+	it('inspect(buffer)', () =>
+	{
+		expect(Resp(new Buffer('abc')).inspect())
+		.eq('[Resp: 200, <Buffer 61 62 63>]')
 	})
 })
