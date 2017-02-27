@@ -521,4 +521,24 @@ describe.only('toss', () =>
 		expect_body_json({ error: 'internal' }),
 		expect_console(spy_console_error, [])
 	)))
+
+	it('Debug', test_debug_difference(
+	() =>
+	{
+		throw Debug([ 1, 2, 3 ])
+	},
+	compose(
+		expect_head(500, 'application/json'),
+		expect_body_json({ error: 'internal' }),
+		expect_console(spy_console_error,
+		[
+			[ 'toss: Debug() attempt, mask as Internal()' ],
+			[ Debug() ],
+		])
+	),
+	compose(
+		expect_head(500, 'application/json'),
+		expect_body_json({ error: 'debug', data: [ 1, 2, 3 ] }),
+		expect_console(spy_console_error, [])
+	)))
 })
