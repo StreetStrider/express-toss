@@ -3,6 +3,7 @@
 import tosser from '../../tosser'
 import Resp   from '../../Resp'
 
+import Wrong from '../../Wrong'
 import Debug from '../../Wrong/Debug'
 import Internal from '../../Wrong/Internal'
 
@@ -296,6 +297,98 @@ describe('toss', () =>
 
 		return request_local_full({ uri: uri, simple: false })
 		.then(expect_head(400, 'text/html'))
+	}))
+
+
+	/* Wrong */
+	it('resp Wrong', with_uri(uri =>
+	{
+		var W = Wrong('wrong_situation')
+
+		server.get(uri, method(() =>
+		{
+			return W({ reason: 'because' })
+		}))
+
+		return request_local_full({ uri: uri, simple: false })
+		.then(expect_head(400, 'application/json'))
+		.then(expect_body_json(
+		{
+			error: 'wrong_situation',
+			data: { reason: 'because' }
+		}))
+	}))
+
+	it('throw Wrong', with_uri(uri =>
+	{
+		var W = Wrong('wrong_situation')
+
+		server.get(uri, method(() =>
+		{
+			throw W({ reason: 'because' })
+		}))
+
+		return request_local_full({ uri: uri, simple: false })
+		.then(expect_head(400, 'application/json'))
+		.then(expect_body_json(
+		{
+			error: 'wrong_situation',
+			data: { reason: 'because' }
+		}))
+	}))
+
+	it('resolve Wrong', with_uri(uri =>
+	{
+		var W = Wrong('wrong_situation')
+
+		server.get(uri, method(() =>
+		{
+			return Promise.resolve(W({ reason: 'because' }))
+		}))
+
+		return request_local_full({ uri: uri, simple: false })
+		.then(expect_head(400, 'application/json'))
+		.then(expect_body_json(
+		{
+			error: 'wrong_situation',
+			data: { reason: 'because' }
+		}))
+	}))
+
+	it('reject Wrong', with_uri(uri =>
+	{
+		var W = Wrong('wrong_situation')
+
+		server.get(uri, method(() =>
+		{
+			return Promise.reject(W({ reason: 'because' }))
+		}))
+
+		return request_local_full({ uri: uri, simple: false })
+		.then(expect_head(400, 'application/json'))
+		.then(expect_body_json(
+		{
+			error: 'wrong_situation',
+			data: { reason: 'because' }
+		}))
+	}))
+
+	it('Wrong(custom status)', with_uri(uri =>
+	{
+		var W = Wrong('wrong_situation_custom', { status: 404 })
+
+		server.get(uri, method(() =>
+		{
+			return W({ reason: 'because' })
+		}))
+
+		return request_local_full({ uri: uri, simple: false })
+		.then(expect_head(404, 'application/json'))
+		.then(expect_body_json(
+		{
+			error: 'wrong_situation_custom',
+			data: { reason: 'because' }
+		}))
 	}))
 
 
