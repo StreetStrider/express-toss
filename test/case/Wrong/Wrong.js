@@ -20,6 +20,8 @@ describe('Wrong', () =>
 		expect(wr.inspect).a('function')
 		expect(wr.resp).a('function')
 
+		expect(wr.inspect()).eq('[Wrong: wrong_input]')
+
 		var resp = wr.resp()
 
 		expect(resp.inspect).a('function')
@@ -43,6 +45,8 @@ describe('Wrong', () =>
 			error: 'wrong_input',
 			data: { data: 'data' }
 		})
+
+		expect(wr.inspect()).eq('[Wrong: wrong_input]')
 	})
 
 	it('Wrong(data) with options', () =>
