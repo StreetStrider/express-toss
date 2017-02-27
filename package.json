@@ -1,6 +1,8 @@
 {
   "name":    "express-toss",
-  "version": "0.0.0",
+  "version": "1.0.0",
+
+  "description": "Makes express router handlers aware of promises. Brings more clear dataflow to handlers",
 
    "author": "Strider <strange.transistor@gmail.com>",
   "license": "ISC",
@@ -14,10 +16,10 @@
 
   "files":
   [
-    "Wrong/",
     "Resp.js",
-    "toss.js",
-    "toss-to.js"
+    "Wrong/",
+    "toss-to.js",
+    "tosser.js"
   ],
 
   "scripts":
