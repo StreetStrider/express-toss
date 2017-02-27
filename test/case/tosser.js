@@ -85,7 +85,7 @@ function expect_body_json_wrong (body)
 	{
 		var json = load(http.body)
 
-		expect(json && json.data && json.data.stack).a('string')
+		expect(json && json.data && json.data.stack, 'has a stack').a('string')
 		delete json.data.stack
 
 		expect(json).deep.eq(body)
