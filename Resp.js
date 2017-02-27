@@ -18,7 +18,7 @@
 
 ; export type Resp<Body> =
 {
-	inspect (): [ Status, Intacted<Mime>, Intacted<Body> ],
+	toJSON (): [ Status, Intacted<Mime>, Intacted<Body> ],
 	toss (rs: express$Response): void
 }
 
@@ -61,7 +61,8 @@ function $Resp <Body> (/* :: ...resp: RespTuple<Body> */): Resp<Body>
 
 	return 0,
 	{
-		inspect: () => [ status, mime, body ],
+		toJSON: () => [ status, mime, body ],
+
 		toss: (rs: express$Response) =>
 		{
 			rs.status(status)

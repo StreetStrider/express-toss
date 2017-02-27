@@ -24,7 +24,7 @@ describe('Wrong', () =>
 
 		var resp = wr.resp()
 
-		expect(resp.inspect).a('function')
+		expect(resp.toJSON).a('function')
 		expect(resp.toss).a('function')
 
 		expect_resp(resp, 400, 'json',

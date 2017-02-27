@@ -12,86 +12,86 @@ describe('Resp', () =>
 
 	it('Resp()', () =>
 	{
-		expect(Resp().inspect()).deep.eq([ 200, Intact, Intact ])
+		expect(Resp().toJSON()).deep.eq([ 200, Intact, Intact ])
 	})
 
 	it('Resp(body)', () =>
 	{
-		expect(Resp('body').inspect()).deep.eq([ 200, Intact, 'body' ])
+		expect(Resp('body').toJSON()).deep.eq([ 200, Intact, 'body' ])
 
-		expect(Resp(200).inspect()).deep.eq([ 200, Intact, 200 ])
+		expect(Resp(200).toJSON()).deep.eq([ 200, Intact, 200 ])
 
-		expect(Resp('json').inspect()).deep.eq([ 200, Intact, 'json' ])
+		expect(Resp('json').toJSON()).deep.eq([ 200, Intact, 'json' ])
 
-		expect(Resp({ body: true }).inspect())
+		expect(Resp({ body: true }).toJSON())
 		.deep.eq([ 200, Intact, { body: true } ])
 
-		expect(Resp(new Buffer('abc')).inspect())
+		expect(Resp(new Buffer('abc')).toJSON())
 		.deep.eq([ 200, Intact, new Buffer('abc') ])
 	})
 
 	it('Resp(status, body)', () =>
 	{
-		expect(Resp(400, 'body').inspect()).deep.eq([ 400, Intact, 'body' ])
+		expect(Resp(400, 'body').toJSON()).deep.eq([ 400, Intact, 'body' ])
 
-		expect(Resp(400, 200).inspect()).deep.eq([ 400, Intact, 200 ])
+		expect(Resp(400, 200).toJSON()).deep.eq([ 400, Intact, 200 ])
 
-		expect(Resp(400, 'json').inspect()).deep.eq([ 400, Intact, 'json' ])
+		expect(Resp(400, 'json').toJSON()).deep.eq([ 400, Intact, 'json' ])
 
-		expect(Resp(400, { body: true }).inspect())
+		expect(Resp(400, { body: true }).toJSON())
 		.deep.eq([ 400, Intact, { body: true } ])
 
-		expect(Resp(400, new Buffer('abc')).inspect())
+		expect(Resp(400, new Buffer('abc')).toJSON())
 		.deep.eq([ 400, Intact, new Buffer('abc') ])
 
-		expect(Resp(400, Intact).inspect())
+		expect(Resp(400, Intact).toJSON())
 		.deep.eq([ 400, Intact, Intact ])
 	})
 
 	it('Resp(mime, body)', () =>
 	{
-		expect(Resp('json', 'body').inspect()).deep.eq([ 200, 'json', 'body' ])
+		expect(Resp('json', 'body').toJSON()).deep.eq([ 200, 'json', 'body' ])
 
-		expect(Resp('json', 200).inspect()).deep.eq([ 200, 'json', 200 ])
+		expect(Resp('json', 200).toJSON()).deep.eq([ 200, 'json', 200 ])
 
-		expect(Resp('json', { body: true }).inspect())
+		expect(Resp('json', { body: true }).toJSON())
 		.deep.eq([ 200, 'json', { body: true } ])
 
-		expect(Resp('json', new Buffer('abc')).inspect())
+		expect(Resp('json', new Buffer('abc')).toJSON())
 		.deep.eq([ 200, 'json', new Buffer('abc') ])
 	})
 
 	it('Resp(status, mime, body)', () =>
 	{
-		expect(Resp(400, 'json', 'body').inspect())
+		expect(Resp(400, 'json', 'body').toJSON())
 		.deep.eq([ 400, 'json', 'body' ])
 
-		expect(Resp(400, 'json', 200).inspect())
+		expect(Resp(400, 'json', 200).toJSON())
 		.deep.eq([ 400, 'json', 200 ])
 
-		expect(Resp(400, 'json', { body: true }).inspect())
+		expect(Resp(400, 'json', { body: true }).toJSON())
 		.deep.eq([ 400, 'json', { body: true } ])
 
-		expect(Resp(400, 'json', new Buffer('abc')).inspect())
+		expect(Resp(400, 'json', new Buffer('abc')).toJSON())
 		.deep.eq([ 400, 'json', new Buffer('abc') ])
 	})
 
 	it('Resp(status, Intact, body)', () =>
 	{
 		/* @flow-off */
-		expect(Resp(400, Intact, 'body').inspect())
+		expect(Resp(400, Intact, 'body').toJSON())
 		.deep.eq([ 400, Intact, 'body' ])
 
 		/* @flow-off */
-		expect(Resp(400, Intact, 200).inspect())
+		expect(Resp(400, Intact, 200).toJSON())
 		.deep.eq([ 400, Intact, 200 ])
 
 		/* @flow-off */
-		expect(Resp(400, Intact, { body: true }).inspect())
+		expect(Resp(400, Intact, { body: true }).toJSON())
 		.deep.eq([ 400, Intact, { body: true } ])
 
 		/* @flow-off */
-		expect(Resp(400, Intact, new Buffer('abc')).inspect())
+		expect(Resp(400, Intact, new Buffer('abc')).toJSON())
 		.deep.eq([ 400, Intact, new Buffer('abc') ])
 	})
 
