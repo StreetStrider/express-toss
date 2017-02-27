@@ -1,8 +1,9 @@
 # express-toss
 
-Makes **express** router handlers aware of **promises**. Brings more clear dataflow to handlers.
+Makes **express** router handlers aware of **promises**. Brings more clear dataflow to express handlers.
 
 ## `toss.method`
+Transforms `(rq) => Promise` function to `(rq, rs) => void` function, to use in express.
 ### resolving
 ```js
 import tosser from 'express-toss'
@@ -14,7 +15,7 @@ express.get('/resource', toss.handler(rq =>
   return db.query().then(transform) /* … */
 }))
 ```
-— return value is used as response body. MIME would be determined automatically by *express* (`application/json` in case of Object, `text/html` in case of `string`, [learn more](http://expressjs.com/en/4x/api.html#res.send)). Status will be 200.
+— return value is used as response body with status 200 and adequate mime. MIME would be determined automatically by *express* (`application/json` in case of `Object`, `text/html` in case of `string`, [learn more](http://expressjs.com/en/4x/api.html#res.send)).
 
 ### rejecting
 ```js
@@ -68,4 +69,7 @@ express.get('/resource', toss.handler(rq =>
   throw NotFound({ username: 'username' })
 }))
 ```
-— `Wrong(code, [options])` creates new specific error *factory*. Calling that constructor creates error *instance*. This instance can be throwed/rejected or sync-returned to indicate error situation.
+— `Wrong(code, [options])` creates new specific error *factory*. Calling that factory creates error *instance*. This instance can be throwed/rejected or sync-returned to indicate error situation.
+
+# license
+ISC © Strider, 2017.
