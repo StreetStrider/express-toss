@@ -2,7 +2,9 @@
 
 import tosser from '../../tosser'
 import Resp   from '../../Resp'
-import Debug  from '../../Wrong/Debug'
+
+import Debug from '../../Wrong/Debug'
+import Internal from '../../Wrong/Internal'
 
 import { inspect } from 'util'
 
@@ -502,5 +504,21 @@ describe.only('toss', () =>
 			[ 'toss: non-protocol error, upgrade to Debug(error)' ],
 			[ new Error('reject_error') ]
 		])
+	)))
+
+	it('Internal', test_debug_difference(
+	() =>
+	{
+		throw Internal([ 1, 2, 3 ])
+	},
+	compose(
+		expect_head(500, 'application/json'),
+		expect_body_json({ error: 'internal' }),
+		expect_console(spy_console_error, [])
+	),
+	compose(
+		expect_head(500, 'application/json'),
+		expect_body_json({ error: 'internal' }),
+		expect_console(spy_console_error, [])
 	)))
 })
