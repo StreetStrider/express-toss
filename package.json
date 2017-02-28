@@ -1,6 +1,6 @@
 {
   "name":    "express-toss",
-  "version": "1.0.0",
+  "version": "1.0.1",
 
   "description": "Makes express router handlers aware of promises. Brings more clear dataflow to handlers",
 
@@ -19,7 +19,9 @@
     "Resp.js",
     "Wrong/",
     "toss-to.js",
-    "tosser.js"
+    "tosser.js",
+
+    "dist/"
   ],
 
   "scripts":
