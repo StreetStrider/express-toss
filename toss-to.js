@@ -1,7 +1,7 @@
 /* @flow */
 /* global express$Response */
 
-export default (resp: any, rs: express$Response) =>
+export default function toss_to (resp: any, rs: express$Response)
 {
 	if (resp && typeof resp.resp === 'function')
 	{

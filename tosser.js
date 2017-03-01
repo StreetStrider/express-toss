@@ -35,7 +35,7 @@ export default function tosser (options?: Options)
 	return 0,
 	{
 		method: method,
-		toss: toss,
+		toss:   toss,
 	}
 
 	function method (handler: Handler<*>): express$Middleware
@@ -45,25 +45,25 @@ export default function tosser (options?: Options)
 		return (rq: express$Request, rs: express$Response) =>
 		{
 			$handler(rq).then(
-			resp =>
-			{
-				toss(resp, rs)
-			},
-			error =>
-			{
-				if (! error_or_wrong(error))
-				{
-					console.error('toss: ' +
-					'rejection with nor Error, nor Wrong, ' +
-					'upgrade to Debug(rejection)')
-					console.error(error)
-
-					error = Debug(error)
-				}
-
-				toss(error, rs)
-			})
+				resp  => toss(resp, rs),
+				error => toss_error(error, rs)
+			)
 		}
+	}
+
+	function toss_error (error: any, rs: express$Response)
+	{
+		if (! error_or_wrong(error))
+		{
+			console.error('toss: ' +
+			'rejection with nor Error, nor Wrong, ' +
+			'upgrade to Debug(rejection)')
+			console.error(error)
+
+			error = Debug(error)
+		}
+
+		toss(error, rs)
 	}
 
 	function toss (resp: any, rs: express$Response)
