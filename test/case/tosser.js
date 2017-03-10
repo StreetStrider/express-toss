@@ -614,6 +614,7 @@ describe('toss', () =>
 	it('Internal', test_debug_difference(
 	() =>
 	{
+		/* @flow-off */
 		throw Internal([ 1, 2, 3 ])
 	},
 	compose(

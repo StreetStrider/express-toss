@@ -8,9 +8,11 @@
 
 import Wrong from './Wrong'
 
-var internal: Toss$Internal = Wrong('internal', { status: 500 })
+var internal_wrong = Wrong('internal', { status: 500 })
 
-export default function Internal ()
+var Internal: Toss$Internal = function Internal ()
 {
-	return internal()
+	return internal_wrong()
 }
+
+export default Internal

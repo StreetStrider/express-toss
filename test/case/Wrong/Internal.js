@@ -16,6 +16,7 @@ describe('Internal', () =>
 
 	it('Internal(something) ignores something', () =>
 	{
+		/* @flow-off */
 		var internal = Internal('something')
 
 		expect_resp(internal.resp(),

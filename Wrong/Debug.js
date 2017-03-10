@@ -8,13 +8,13 @@
 
 import Wrong from './Wrong'
 
-var $$Debug: Toss$Debug = Wrong('debug', { status: 500 })
+var debug_wrong = Wrong('debug', { status: 500 })
 
 var marker = Symbol('Debug')
 
 var Debug: Toss$Debug = function Debug (data)
 {
-	var debug = $$Debug(data)
+	var debug = debug_wrong(data)
 
 	/* @flow-off */
 	debug[marker] = true
