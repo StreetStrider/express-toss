@@ -1,8 +1,8 @@
 {
   "name":    "express-toss",
-  "version": "1.0.1",
+  "version": "1.1.0",
 
-  "description": "Makes express router handlers aware of promises. Brings more clear dataflow to handlers",
+  "description": "Makes express router handlers aware of promises. Brings more clear dataflow to handlers.",
 
    "author": "Strider <strange.transistor@gmail.com>",
   "license": "ISC",
