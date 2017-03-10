@@ -90,7 +90,7 @@ function $Resp <Body> (/* :: ...resp: RespTuple<Body> */): Resp<Body>
 				if (body_repr.length > 51)
 				{
 					body_repr = body_repr.slice(0, 25)
-					+ '…'    + body_repr.slice(-25)
+					+ '…'     + body_repr.slice(-25)
 				}
 
 				seq.push(body_repr)
