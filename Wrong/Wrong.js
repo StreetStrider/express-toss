@@ -38,9 +38,8 @@ var defaults =
 
 var marker = Symbol('Wrong')
 
-export default $Wrong
-
-function $Wrong <Data> (code: Code, options?: Options): Wrong<Data>
+export default function $Wrong <Data> (code: Code, options?: Options)
+: Wrong<Data>
 {
 	options = assign({}, defaults, options)
 

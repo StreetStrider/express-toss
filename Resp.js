@@ -31,10 +31,9 @@
 
 import { inspect } from 'util'
 
-export default $Resp
-
 /* eslint-disable complexity */
-function $Resp <Body> (/* :: ...resp: RespTuple<Body> */): Resp<Body>
+export default function $Resp <Body> (/* :: ...resp: RespTuple<Body> */)
+: Resp<Body>
 {
 	var status: Status = 200
 	var mime: Intacted<Mime> = Intact
