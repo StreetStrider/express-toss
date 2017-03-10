@@ -6,11 +6,11 @@
 
 ;
 
-import $Wrong from './Wrong'
+import Wrong from './Wrong'
 
-var internal: Toss$Internal = $Wrong('internal', { status: 500 })
+var internal: Toss$Internal = Wrong('internal', { status: 500 })
 
-export default () =>
+export default function Internal ()
 {
 	return internal()
 }

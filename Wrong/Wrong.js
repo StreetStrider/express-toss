@@ -38,7 +38,7 @@ var defaults =
 
 var marker = Symbol('Wrong')
 
-export default function $Wrong <Data> (code: Toss$Code, options?: Options)
+export default function Wrong <Data> (code: Toss$Code, options?: Options)
 : Toss$Wrong<Data>
 {
 	options = assign({}, defaults, options)
@@ -74,7 +74,7 @@ export default function $Wrong <Data> (code: Toss$Code, options?: Options)
 	}
 }
 
-$Wrong.is = (it: any) =>
+Wrong.is = (it: any) =>
 {
 	return Boolean(it && (it[marker]))
 }

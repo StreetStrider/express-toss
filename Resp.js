@@ -36,7 +36,7 @@ import { inspect } from 'util'
 
 
 /* eslint-disable complexity */
-export default function $Resp <Body> (/* :: ...resp: RespTuple<Body> */)
+export default function Resp <Body> (/* :: ...resp: RespTuple<Body> */)
 : Toss$Resp<Body>
 {
 	var status: Toss$Status = 200
@@ -133,4 +133,4 @@ export default function $Resp <Body> (/* :: ...resp: RespTuple<Body> */)
 }
 /* eslint-enable complexity */
 
-var Intact = $Resp.Intact = Symbol('Intact')
+var Intact = Resp.Intact = Symbol('Intact')

@@ -6,13 +6,13 @@
 
 ;
 
-import $Wrong from './Wrong'
+import Wrong from './Wrong'
 
-var $$Debug: Toss$Debug = $Wrong('debug', { status: 500 })
+var $$Debug: Toss$Debug = Wrong('debug', { status: 500 })
 
 var marker = Symbol('Debug')
 
-var $Debug: Toss$Debug = function (data)
+var Debug: Toss$Debug = function Debug (data)
 {
 	var debug = $$Debug(data)
 
@@ -22,9 +22,9 @@ var $Debug: Toss$Debug = function (data)
 	return debug
 }
 
-export default $Debug
+export default Debug
 
-$Debug.is = (it: any) =>
+Debug.is = (it: any) =>
 {
 	return Boolean(it && (it[marker]))
 }
