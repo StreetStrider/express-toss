@@ -119,7 +119,20 @@ function expect_console (spy, args_s)
 
 	function marshall (args_s)
 	{
-		return args_s.map(args => inspect(args))
+		return args_s.map(args =>
+		{
+			return args.map(arg =>
+			{
+				if (arg instanceof Error)
+				{
+					return arg.message
+				}
+				else
+				{
+					return inspect(arg)
+				}
+			})
+		})
 	}
 }
 
