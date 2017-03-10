@@ -3,12 +3,12 @@
 /* global express$Request */
 /* global express$Response */
 
-; export type Options =
+; export type Toss$Options =
 {
 	debug?: boolean
 }
 
-; export type Handler<T> = (rq: express$Request) => Promise<T> | T
+; export type Toss$Handler<T> = (rq: express$Request) => Promise<T> | T
 
 ;
 
@@ -20,12 +20,12 @@ import Internal from './Wrong/Internal'
 
 import toss_to from './toss-to'
 
-var defaults =
+var defaults: Toss$Options =
 {
 	debug: false
 }
 
-export default function tosser (options?: Options)
+export default function tosser (options?: Toss$Options)
 {
 	options = assign({}, defaults, options)
 
@@ -38,7 +38,7 @@ export default function tosser (options?: Options)
 		toss:   toss,
 	}
 
-	function method (handler: Handler<*>): express$Middleware
+	function method (handler: Toss$Handler<*>): express$Middleware
 	{
 		var $handler = capture(handler)
 
@@ -100,7 +100,7 @@ export default function tosser (options?: Options)
 	}
 }
 
-function capture <T> (fn: Handler<T>): (rq: express$Request) => Promise<T>
+function capture <T> (fn: Toss$Handler<T>): (rq: express$Request) => Promise<T>
 {
 	return function ()
 	{

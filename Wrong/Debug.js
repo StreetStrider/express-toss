@@ -1,18 +1,18 @@
 /* @flow */
 
-; import type { Wrong } from './Wrong'
+; import type { Toss$Wrong } from './Wrong'
 
-; export type Debug = Wrong<any>
+; export type Toss$Debug = Toss$Wrong<any>
 
 ;
 
 import $Wrong from './Wrong'
 
-var $$Debug: Debug = $Wrong('debug', { status: 500 })
+var $$Debug: Toss$Debug = $Wrong('debug', { status: 500 })
 
 var marker = Symbol('Debug')
 
-var $Debug: Debug = function (data)
+var $Debug: Toss$Debug = function (data)
 {
 	var debug = $$Debug(data)
 

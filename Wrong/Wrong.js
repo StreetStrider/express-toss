@@ -1,27 +1,27 @@
 /* @flow */
 
-; import type { Status, Resp } from '../Resp'
+; import type { Toss$Status, Toss$Resp } from '../Resp'
 
-; export type Code = string
+; export type Toss$Code = string
 
-; export type WrongData<Data> =
+; export type Toss$WrongData<Data> =
 {
-	error: Code,
+	error: Toss$Code,
 	data:  Data
 }
 
-; export type WrongInstance<Data> =
+; export type Toss$WrongInstance<Data> =
 {
-	code: Code,
+	code: Toss$Code,
 	inspect (): string,
-	resp (): Resp<WrongData<Data>>
+	resp (): Toss$Resp<Toss$WrongData<Data>>
 }
 
-; export type Wrong<Data> = (data: Data) => WrongInstance<Data>
+; export type Toss$Wrong<Data> = (data: Data) => Toss$WrongInstance<Data>
 
 ; export type Options =
 {
-	status?: Status,
+	status?: Toss$Status,
 }
 
 ;
@@ -38,20 +38,20 @@ var defaults =
 
 var marker = Symbol('Wrong')
 
-export default function $Wrong <Data> (code: Code, options?: Options)
-: Wrong<Data>
+export default function $Wrong <Data> (code: Toss$Code, options?: Options)
+: Toss$Wrong<Data>
 {
 	options = assign({}, defaults, options)
 
 	/* @flow-off */
-	var status: Status = options.status
+	var status: Toss$Status = options.status
 
 	return (data: Data) =>
 	{
 		/* @flow-off */
 		(data == null) && (data = void 0)
 
-		var body: WrongData<Data> =
+		var body: Toss$WrongData<Data> =
 		{
 			error: code,
 			data:  data

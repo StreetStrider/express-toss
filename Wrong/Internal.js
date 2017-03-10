@@ -1,14 +1,14 @@
 /* @flow */
 
-; import type { Wrong } from './Wrong'
+; import type { Toss$Wrong } from './Wrong'
 
-; export type Internal = Wrong<void>
+; export type Toss$Internal = Toss$Wrong<void>
 
 ;
 
 import $Wrong from './Wrong'
 
-var internal: Internal = $Wrong('internal', { status: 500 })
+var internal: Toss$Internal = $Wrong('internal', { status: 500 })
 
 export default () =>
 {

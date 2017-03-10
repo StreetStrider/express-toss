@@ -3,7 +3,7 @@
 
 import { expect } from 'chai'
 
-import type { Resp } from '../../Resp'
+import type { Toss$Resp } from '../../Resp'
 
 export type pseudo$Response = express$Response & { _: [ any, any, any ] }
 
@@ -36,7 +36,7 @@ export function expect_rs
 
 export function expect_resp <T>
 (
-	resp: Resp<T>, status: any, mime: any, data: any
+	resp: Toss$Resp<T>, status: any, mime: any, data: any
 )
 {
 	var rs = pseudo_rs()

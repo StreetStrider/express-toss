@@ -1,18 +1,21 @@
 /* @flow */
 /* global express$Response */
 
-; export type Status = number
+; export type Toss$Status = number
 
-; export type Mime = string
+; export type Toss$Mime = string
 
-; export type Intacted<T> = T | Symbol
+; export type Toss$Intacted<T> = T | Symbol
 
-; export type RespTuple<Body>
-= [ Status, Mime, Body ]
-| [ Status, Symbol, Body ] // workaround for (Mime | Symbol or Intacted<Mime>)
-| [ Status, Body ]
-| [ Status, Symbol ] // workaround for (Body | Symbol or Intacted<Body>)
-| [ Mime, Body ]
+// eslint-disable-next-line no-unused-vars
+; type RespTuple<Body>
+= [ Toss$Status, Toss$Mime, Body ]
+// workaround for (Toss$Mime | Symbol or Toss$Intacted<Toss$Mime>):
+| [ Toss$Status, Symbol, Body ]
+| [ Toss$Status, Body ]
+// workaround for (Body | Symbol or Toss$Intacted<Body>):
+| [ Toss$Status, Symbol ]
+| [ Toss$Mime, Body ]
 | [ Body ]
 | []
 /*
@@ -20,10 +23,10 @@
   https://github.com/facebook/flow/issues/3416
 */
 
-; export type Resp<Body> =
+; export type Toss$Resp<Body> =
 {
 	inspect (): string,
-	toJSON (): [ Status, Intacted<Mime>, Intacted<Body> ],
+	toJSON (): [ Toss$Status, Toss$Intacted<Toss$Mime>, Toss$Intacted<Body> ],
 	toss (rs: express$Response): void
 }
 
@@ -33,11 +36,11 @@ import { inspect } from 'util'
 
 /* eslint-disable complexity */
 export default function $Resp <Body> (/* :: ...resp: RespTuple<Body> */)
-: Resp<Body>
+: Toss$Resp<Body>
 {
-	var status: Status = 200
-	var mime: Intacted<Mime> = Intact
-	var body: Intacted<Body> = Intact
+	var status: Toss$Status = 200
+	var mime: Toss$Intacted<Toss$Mime> = Intact
+	var body: Toss$Intacted<Body> = Intact
 
 	if (arguments.length === 1)
 	{
@@ -45,7 +48,7 @@ export default function $Resp <Body> (/* :: ...resp: RespTuple<Body> */)
 	}
 	else if (arguments.length === 2)
 	{
-		var status_or_mime: Status | Mime = arguments[0]
+		var status_or_mime: Toss$Status | Toss$Mime = arguments[0]
 
 		if (typeof status_or_mime === 'number')
 		{
