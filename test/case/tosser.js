@@ -148,7 +148,7 @@ describe('toss', () =>
 	if (1)
 	{
 		var save_console = console.error
-		/* @flow-off*/
+		/* @flow-off */
 		console.error = noop
 	}
 	var spy_console_error = sinon.spy(console, 'error')
