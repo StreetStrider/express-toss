@@ -1,13 +1,15 @@
 /* @flow */
 /* global express$Response */
 
-import { expect } from 'chai'
-
 import type { Toss$Resp } from '../../Resp'
 
 export type pseudo$Response = express$Response & { _: [ any, any, any ] }
 
 ;
+
+import { expect } from 'chai'
+
+
 export function pseudo_rs (): pseudo$Response
 {
 	var rs =
