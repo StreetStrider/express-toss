@@ -15,6 +15,10 @@
 | [ Mime, Body ]
 | [ Body ]
 | []
+/*
+  Arrays are invariant
+  https://github.com/facebook/flow/issues/3416
+*/
 
 ; export type Resp<Body> =
 {
