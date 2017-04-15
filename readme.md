@@ -1,6 +1,10 @@
 # express-toss
 
-Makes **express** router handlers aware of **promises**. Brings more clear dataflow to express handlers.
+[![OSC licensed](http://img.shields.io/badge/license-ISC-brightgreen.svg?style=flat-square)](#license)
+[![npm|express-toss](http://img.shields.io/badge/npm-express--toss-CB3837.svg?style=flat-square)](https://www.npmjs.org/package/express-toss)
+[![flowtype](http://img.shields.io/badge/flow-type-EBBF3A.svg?style=flat-square)](#flow)
+
+> Makes **express** router handlers aware of **promises**. Brings more clear dataflow to express handlers.
 
 ## `toss.method`
 Transforms `(rq) => Promise` function to `(rq, rs) => void` function, to use in express.
@@ -71,5 +75,8 @@ express.get('/resource', toss.handler(rq =>
 ```
 — `Wrong(code, [options])` creates new specific error *factory*. Calling that factory creates error *instance*. This instance can be throwed/rejected or sync-returned to indicate error situation.
 
-# license
+## flow
+FlowType definitions included.
+
+## license
 ISC © Strider, 2017.
