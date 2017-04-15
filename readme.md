@@ -7,7 +7,8 @@
 > Makes **express** router handlers aware of **promises**. Brings more clear dataflow to express handlers.
 
 ## `toss.method`
-Transforms `(rq) => Promise` function to `(rq, rs) => void` function, to use in express.
+Transforms `(rq) => Promise` function to `(rq, rs) => void` function for use inside Express' handlers.
+
 ### resolving
 ```js
 import tosser from 'express-toss'
