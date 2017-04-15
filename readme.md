@@ -1,6 +1,6 @@
 # express-toss
 
-[![OSC licensed](http://img.shields.io/badge/license-ISC-brightgreen.svg?style=flat-square)](#license)
+[![ISC licensed](http://img.shields.io/badge/license-ISC-brightgreen.svg?style=flat-square)](#license)
 [![npm|express-toss](http://img.shields.io/badge/npm-express--toss-CB3837.svg?style=flat-square)](https://www.npmjs.org/package/express-toss)
 [![flowtype](http://img.shields.io/badge/flow-type-EBBF3A.svg?style=flat-square)](#flow)
 
