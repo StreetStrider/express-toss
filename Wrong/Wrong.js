@@ -4,20 +4,21 @@
 
 ; export type Toss$Code = string
 
-; export type Toss$WrongData<Data> =
+; export type Toss$Wrong$Data<Code: Toss$Code, Data> =
 {
-	error: Toss$Code,
-	data:  Data
+	error: Code,
+	data:  Data,
 }
 
-; export type Toss$WrongInstance<Data> =
+; export type Toss$Wrong$Instance<Code: Toss$Code, Data> =
 {
-	code: Toss$Code,
+	code: Code,
 	inspect (): string,
-	resp (): Toss$Resp<Toss$WrongData<Data>>
+	resp (): Toss$Resp<Toss$Wrong$Data<Code, Data>>,
 }
 
-; export type Toss$Wrong<Data> = (data: Data) => Toss$WrongInstance<Data>
+; export type Toss$Wrong<Code: Toss$Code, Data> =
+(data: Data) => Toss$Wrong$Instance<Code, Data>
 
 ; export type Options =
 {
@@ -38,8 +39,12 @@ var defaults =
 
 var marker = Symbol('Wrong')
 
-export default function Wrong <Data> (code: Toss$Code, options?: Options)
-: Toss$Wrong<Data>
+export default function Wrong <Code: Toss$Code, Data>
+(
+	code: Code,
+	options?: Options
+)
+: Toss$Wrong<Code, Data>
 {
 	options = assign({}, defaults, options)
 
@@ -51,7 +56,7 @@ export default function Wrong <Data> (code: Toss$Code, options?: Options)
 		/* @flow-off */
 		(data == null) && (data = void 0)
 
-		var body: Toss$WrongData<Data> =
+		var body: Toss$Wrong$Data<Code, Data> =
 		{
 			error: code,
 			data:  data

@@ -2,7 +2,7 @@
 
 ; import type { Toss$Wrong } from './Wrong'
 
-; export type Toss$Debug = Toss$Wrong<any>
+; export type Toss$Debug = Toss$Wrong<'debug', any>
 
 ;
 

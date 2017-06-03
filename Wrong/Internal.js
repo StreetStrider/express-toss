@@ -2,7 +2,7 @@
 
 ; import type { Toss$Wrong } from './Wrong'
 
-; export type Toss$Internal = Toss$Wrong<void>
+; export type Toss$Internal = Toss$Wrong<'internal', void>
 
 ;
 
