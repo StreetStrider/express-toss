@@ -29,7 +29,7 @@
 
 var assign = Object.assign
 
-import $Resp from '../Resp'
+import Resp from '../Resp'
 
 
 var defaults =
@@ -73,7 +73,7 @@ export default function Wrong <Code: Toss$Code, Data>
 
 			resp: () =>
 			{
-				return $Resp(status, 'json', body)
+				return Resp(status, 'json', body)
 			}
 		}
 	}
