@@ -3,35 +3,23 @@
 /* global express$Request */
 /* global express$Response */
 
-; export type Toss$Options =
-{
-	debug?: boolean
-}
+; import type { Options as Toss$Options } from './obscure'
 
 ; export type Toss$Handler<T> = (rq: express$Request) => Promise<T> | T
 
 ;
 
-var assign = Object.assign
+import obscurer from './obscure'
 
 import Wrong from './Wrong'
 import Debug from './Wrong/Debug'
-import Internal from './Wrong/Internal'
 
 import toss_to from './toss-to'
 
 
-var defaults: Toss$Options =
-{
-	debug: false
-}
-
 export default function tosser (options?: Toss$Options)
 {
-	options = assign({}, defaults, options)
-
-	/* @flow-off */
-	var debug: boolean = options.debug
+	var obscure = obscurer(options)
 
 	return 0,
 	{
@@ -69,35 +57,7 @@ export default function tosser (options?: Toss$Options)
 
 	function toss (resp: any, rs: express$Response)
 	{
-		if (debug)
-		{
-			if (resp instanceof Error)
-			{
-				console.error('toss: non-protocol error, upgrade to Debug(error)')
-				console.error(resp)
-
-				resp = Debug(raw_error(resp))
-			}
-		}
-		else
-		{
-			if (resp instanceof Error)
-			{
-				console.error('toss: non-protocol attempt, mask as Internal()')
-				console.error(resp)
-
-				resp = Internal()
-			}
-			else if (Debug.is(resp))
-			{
-				console.error('toss: Debug() attempt, mask as Internal()')
-				console.error(resp)
-
-				resp = Internal()
-			}
-		}
-
-		toss_to(resp, rs)
+		toss_to(obscure(resp), rs)
 	}
 }
 
@@ -125,15 +85,5 @@ function error_or_wrong (it: any)
 	else
 	{
 		return false
-	}
-}
-
-function raw_error (error: Error)
-{
-	return 0,
-	{
-		name: error.name,
-		message: error.message,
-		stack: error.stack,
 	}
 }
