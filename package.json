@@ -36,23 +36,27 @@
       "flow check",
 
     "mocha":
-      "npm run npm &&                 mocha    --recursive release/npm/dist/test/case",
+      "npm run dev &&                 mocha    --recursive release/dev/dist/test/case",
 
     "cover":
-      "npm run npm && istanbul cover _mocha -- --recursive release/npm/dist/test/case",
+      "npm run dev && istanbul cover _mocha -- --recursive release/dev/dist/test/case",
 
     "test":
       "npm run st && npm run flow && npm run mocha",
 
     "npm":
-      "metalbox preset npm"
+      "metalbox preset npm",
+
+    "dev":
+      "metalbox preset dev -1"
   },
 
   "metalbox":
   {
     "presets":
     {
-      "npm": [ "Library" ]
+      "npm": [ "Library" ],
+      "dev": [ "Library/Dev" ]
     }
   },
 
