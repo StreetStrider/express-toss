@@ -15,7 +15,7 @@ import tosser from 'express-toss'
 
 var toss = tosser({ debug: true })
 
-express.get('/resource', toss.handler(rq =>
+express.get('/resource', toss.method(rq =>
 {
   return db.query().then(transform) /* … */
 }))
@@ -28,7 +28,7 @@ import tosser from 'express-toss'
 
 var toss = tosser({ debug: true })
 
-express.get('/resource', toss.handler(rq =>
+express.get('/resource', toss.method(rq =>
 {
   throw new TypeError
 }))
@@ -42,7 +42,7 @@ import Resp   from 'express-toss/Resp'
 
 var toss = tosser({ debug: true })
 
-express.get('/resource', toss.handler(rq =>
+express.get('/resource', toss.method(rq =>
 {
   // use `Resp` to fine-control response
   return Resp(200, 'text/html', html)
@@ -65,7 +65,7 @@ var toss = tosser({ debug: true })
 var NotPermitted = Wrong('permission_required')
 var NotFound = Wrong('user_not_found', { status: 404 })
 
-express.get('/resource', toss.handler(rq =>
+express.get('/resource', toss.method(rq =>
 {
   // throwing or returning `Wrong` to fine-control response
   throw NotPermitted()
