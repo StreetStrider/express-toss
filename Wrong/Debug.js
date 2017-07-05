@@ -1,8 +1,10 @@
 /* @flow */
 
 ; import type { Toss$Wrong } from './Wrong'
+; import type { Toss$Wrong$Instance } from './Wrong'
 
-; export type Toss$Debug = Toss$Wrong<'debug', any>
+; export type Toss$Debug<Data> = Toss$Wrong<'debug', Data>
+; export type Toss$Debug$Instance<Data> = Toss$Wrong$Instance<'debug', Data>
 
 ;
 
@@ -12,7 +14,8 @@ var debug_wrong = Wrong('debug', { status: 500 })
 
 var marker = Symbol('Debug')
 
-var Debug: Toss$Debug = function Debug (data)
+/* @flow-off */
+export default function Debug<Data> (data: Data): Toss$Debug$Instance<Data>
 {
 	var debug = debug_wrong(data)
 
@@ -21,8 +24,6 @@ var Debug: Toss$Debug = function Debug (data)
 
 	return debug
 }
-
-export default Debug
 
 Debug.is = (it: any) =>
 {
