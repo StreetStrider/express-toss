@@ -5,7 +5,7 @@
 
 ; import type { Options as Toss$Options } from './obscure'
 
-; export type Toss$Handler<T> = (rq: express$Request) => Promise<T> | T
+export type Toss$Handler<T> = (rq: express$Request) => Promise<T> | T
 
 ;
 

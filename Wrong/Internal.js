@@ -1,9 +1,9 @@
 /* @flow */
 
 ; import type { Toss$Wrong } from './Wrong'
-; import type { Toss$Wrong$Instance } from './Wrong'
+import type { Toss$Wrong$Instance } from './Wrong'
 
-; export type Toss$Internal = Toss$Wrong<'internal', void>
+export type Toss$Internal = Toss$Wrong<'internal', void>
 ; export type Toss$Internal$Instance = Toss$Wrong$Instance<'internal', void>
 
 ;

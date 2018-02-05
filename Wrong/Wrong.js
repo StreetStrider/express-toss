@@ -2,7 +2,7 @@
 
 ; import type { Toss$Status, Toss$Resp } from '../Resp'
 
-; export type Toss$Code = string
+export type Toss$Code = string
 
 ; export type Toss$Wrong$Data<Code: Toss$Code, Data> =
 {
