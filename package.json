@@ -56,8 +56,8 @@
   {
     "presets":
     {
-      "npm": [ "Library" ],
-      "dev": [ "Library/Dev" ]
+      "dev": [ "Library/Dev", { "options": { "targets": "node-first" }} ],
+      "npm": [ "Library",     { "options": { "targets": "node-first" }} ]
     }
   },
 
