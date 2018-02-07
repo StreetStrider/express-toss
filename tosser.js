@@ -27,7 +27,7 @@ export default function tosser (options?: Toss$Options)
 		toss:   toss,
 	}
 
-	function method (handler: Toss$Handler<*>): express$Middleware
+	function method<T> (handler: Toss$Handler<T>): express$Middleware
 	{
 		var $handler = capture(handler)
 
