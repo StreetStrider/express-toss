@@ -7,22 +7,6 @@
 
 ; export type Toss$Intacted<T> = T | Symbol
 
-// eslint-disable-next-line no-unused-vars
-; type RespTuple<Body>
-= [ Toss$Status, Toss$Mime, Body ]
-// workaround for (Toss$Mime | Symbol or Toss$Intacted<Toss$Mime>):
-| [ Toss$Status, Symbol, Body ]
-| [ Toss$Status, Body ]
-// workaround for (Body | Symbol or Toss$Intacted<Body>):
-| [ Toss$Status, Symbol ]
-| [ Toss$Mime, Body ]
-| [ Body ]
-| []
-/*
-  Arrays are invariant
-  https://github.com/facebook/flow/issues/3416
-*/
-
 ; export type Toss$Resp<Body> =
 {
 	inspect (): string,
@@ -30,14 +14,29 @@
 	toss (rs: express$Response): void
 }
 
-;
+/*::
+
+declare export default function Resp <Body> (
+	Toss$Status,
+	Toss$Intacted<Toss$Mime>,
+	Toss$Intacted<Body>
+)
+: Toss$Resp<Body>
+declare export default function Resp <Body>
+(
+	Toss$Status, Toss$Intacted<Body>
+)
+: Toss$Resp<Body>
+declare export default function Resp <Body> (Toss$Mime, Body): Toss$Resp<Body>
+declare export default function Resp <Body> (Body): Toss$Resp<Body>
+declare export default function Resp <Body> (): Toss$Resp<Body>
+
+*/
 
 import { inspect } from 'util'
 
-
 /* eslint-disable complexity */
-export default function Resp <Body> (/* :: ...resp: RespTuple<Body> */)
-: Toss$Resp<Body>
+export default function Resp <Body> ()
 {
 	var status: Toss$Status = 200
 	var mime: Toss$Intacted<Toss$Mime> = Intact
@@ -65,8 +64,8 @@ export default function Resp <Body> (/* :: ...resp: RespTuple<Body> */)
 	else if (arguments.length > 2)
 	{
 		status = arguments[0]
-		mime = arguments[1]
-		body = arguments[2]
+		mime   = arguments[1]
+		body   = arguments[2]
 	}
 
 	return 0,
