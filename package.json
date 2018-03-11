@@ -31,7 +31,7 @@
       "eslint .",
 
     "t":
-      "flow",
+      "glow || flow",
 
     "unit":
       "npm run dev &&                 mocha    --recursive release/dev/test/case",
@@ -73,7 +73,7 @@
       "StrangeTransistor/js-outlander#2.3.0",
 
     "flow-bin":
-      "0.65",
+      "0.67",
 
     "flow-typed":
       "2",
