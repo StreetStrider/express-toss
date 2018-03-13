@@ -48,7 +48,7 @@ express.get('/resource', toss.method(rq =>
   return Resp(200, 'text/html', html)
 
   // can be used for 400s
-  return(400, { server: error })
+  return Resp(400, { server: error })
 }))
 ```
 — `Resp([status], [mime], body)` is applied to express' response. `Resp` can be sync-returned or used inside promise.
