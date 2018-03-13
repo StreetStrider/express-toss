@@ -10,12 +10,7 @@ export type Toss$Handler<T> = (rq: express$Request) => Promise<T> | T
 ;
 
 import obscurer from './obscure'
-
-import Wrong from './Wrong'
-import Debug from './Wrong/Debug'
-
-import toss_to from './toss-to'
-
+import toss_to  from './toss-to'
 
 export default function tosser (options?: Toss$Options)
 {
@@ -33,31 +28,15 @@ export default function tosser (options?: Toss$Options)
 
 		return (rq: express$Request, rs: express$Response) =>
 		{
-			$handler(rq).then(
-				resp  => toss(resp, rs),
-				error => toss_error(error, rs)
-			)
+			$handler(rq)
+			.then(obscure.resolve, obscure.reject)
+			.then(resp => toss(resp, rs))
 		}
-	}
-
-	function toss_error (error: any, rs: express$Response)
-	{
-		if (! error_or_wrong(error))
-		{
-			console.error('toss: ' +
-			'rejection with nor Error, nor Wrong, ' +
-			'upgrade to Debug(rejection)')
-			console.error(error)
-
-			error = Debug(error)
-		}
-
-		toss(error, rs)
 	}
 
 	function toss (resp: any, rs: express$Response)
 	{
-		toss_to(obscure(resp), rs)
+		toss_to(obscure.fade(resp), rs)
 	}
 }
 
@@ -69,21 +48,5 @@ function capture <T> (fn: Toss$Handler<T>): (rq: express$Request) => Promise<T>
 		{
 			return rs(fn.apply(this, arguments))
 		})
-	}
-}
-
-function error_or_wrong (it: any)
-{
-	if (it instanceof Error)
-	{
-		return true
-	}
-	else if (Wrong.is(it))
-	{
-		return true
-	}
-	else
-	{
-		return false
 	}
 }

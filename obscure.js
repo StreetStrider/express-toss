@@ -9,6 +9,7 @@
 
 var assign = Object.assign
 
+import Wrong from './Wrong'
 import Debug from './Wrong/Debug'
 import Internal from './Wrong/Internal'
 
@@ -25,37 +26,79 @@ export default function obscurer (options?: Options)
 	/* @flow-off */
 	var debug: boolean = options.debug
 
-	return function obscure (resp: any)
+	var obscure =
 	{
-		if (debug)
+		resolve: function resolve (resp: any)
 		{
-			if (resp instanceof Error)
-			{
-				console.error('toss: non-protocol error, upgrade to Debug(error)')
-				console.error(resp)
+			return resp
+		},
 
-				return Debug(raw_error(resp))
-			}
-		}
-		else
+		reject: function reject (resp: any)
 		{
-			if (resp instanceof Error)
+			if (! error_or_wrong(resp))
 			{
-				console.error('toss: non-protocol attempt, mask as Internal()')
+				console.error('toss: ' +
+				'rejection with nor Error, nor Wrong, ' +
+				'upgrade to Debug(rejection)')
 				console.error(resp)
 
-				return Internal()
+				resp = Debug(resp)
 			}
-			else if (Debug.is(resp))
+
+			return resp
+		},
+
+		fade: function fade (resp: any)
+		{
+			if (debug)
 			{
-				console.error('toss: Debug() attempt, mask as Internal()')
-				console.error(resp)
+				if (resp instanceof Error)
+				{
+					console.error('toss: ' +
+					'non-protocol error, upgrade to Debug(error)')
+					console.error(resp)
 
-				return Internal()
+					return Debug(raw_error(resp))
+				}
 			}
-		}
+			else
+			{
+				if (resp instanceof Error)
+				{
+					console.error('toss: non-protocol attempt, mask as Internal()')
+					console.error(resp)
 
-		return resp
+					return Internal()
+				}
+				else if (Debug.is(resp))
+				{
+					console.error('toss: Debug() attempt, mask as Internal()')
+					console.error(resp)
+
+					return Internal()
+				}
+			}
+
+			return resp
+		},
+	}
+
+	return obscure
+}
+
+function error_or_wrong (it: any)
+{
+	if (it instanceof Error)
+	{
+		return true
+	}
+	else if (Wrong.is(it))
+	{
+		return true
+	}
+	else
+	{
+		return false
 	}
 }
 
