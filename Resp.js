@@ -33,6 +33,8 @@ declare export default function Resp <Body> (): Toss$Resp<Body>
 
 */
 
+;
+
 import { inspect } from 'util'
 
 /* eslint-disable complexity */
