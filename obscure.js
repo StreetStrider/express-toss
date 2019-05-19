@@ -42,7 +42,7 @@ export default function obscurer (options?: Options)
 				'upgrade to Debug(rejection)')
 				console.error(resp)
 
-				resp = Debug(resp)
+				resp = Debug/* :: <any> */(resp)
 			}
 
 			return resp
@@ -58,7 +58,7 @@ export default function obscurer (options?: Options)
 					'non-protocol error, upgrade to Debug(error)')
 					console.error(resp)
 
-					return Debug(raw_error(resp))
+					return Debug/* :: <any> */(raw_error(resp))
 				}
 			}
 			else
