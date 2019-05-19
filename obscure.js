@@ -1,13 +1,13 @@
 /* @flow */
 
-; export type Options =
+export type Options =
 {
 	debug?: boolean,
 }
 
-;
 
 var assign = Object.assign
+
 
 import Wrong from './Wrong'
 import Debug from './Wrong/Debug'
@@ -18,6 +18,7 @@ var defaults =
 {
 	debug: false
 }
+
 
 export default function obscurer (options?: Options)
 {

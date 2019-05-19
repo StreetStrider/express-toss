@@ -3,14 +3,14 @@
 /* global express$Request */
 /* global express$Response */
 
-; import type { Options as Toss$Options } from './obscure'
+import type { Options as Toss$Options } from './obscure'
 
 export type Toss$Handler<T> = (rq: express$Request) => Promise<T> | T
 
-;
 
 import obscurer from './obscure'
 import toss_to  from './toss-to'
+
 
 export default function tosser (options?: Toss$Options)
 {

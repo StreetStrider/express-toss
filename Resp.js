@@ -1,13 +1,13 @@
 /* @flow */
 /* global express$Response */
 
-; export type Toss$Status = number
+export type Toss$Status = number
 
-; export type Toss$Mime = string
+export type Toss$Mime = string
 
-; export type Toss$Intacted<T> = T | Symbol
+export type Toss$Intacted<T> = T | Symbol
 
-; export type Toss$Resp<Body> =
+export type Toss$Resp<Body> =
 {
 	toJSON (): [ Toss$Status, Toss$Intacted<Toss$Mime>, Toss$Intacted<Body> ],
 	toss (rs: express$Response): void
@@ -32,9 +32,9 @@ declare export default function Resp <Body> (): Toss$Resp<Body>
 
 */
 
-;
 
 import { inspect } from 'util'
+
 
 /* eslint-disable complexity */
 export default function Resp <Body> ()

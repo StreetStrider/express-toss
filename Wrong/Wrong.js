@@ -1,35 +1,35 @@
 /* @flow */
 
-; import type { Toss$Status, Toss$Resp } from '../Resp'
+import type { Toss$Status, Toss$Resp } from '../Resp'
 
 export type Toss$Code = string
 
-; export type Toss$Wrong$Data<Code: Toss$Code, Data> =
+export type Toss$Wrong$Data<Code: Toss$Code, Data> =
 {
 	error: Code,
 	data:  Data,
 }
 
-; export type Toss$Wrong$Instance<Code: Toss$Code, Data> =
+export type Toss$Wrong$Instance<Code: Toss$Code, Data> =
 {
 	code: Code,
 	resp (): Toss$Resp<Toss$Wrong$Data<Code, Data>>,
 }
 
-; export type Toss$Wrong<Code: Toss$Code, Data> =
+export type Toss$Wrong<Code: Toss$Code, Data> =
 (data: Data) => Toss$Wrong$Instance<Code, Data>
 
-; export type Options =
+;
+
+export type Options =
 {
 	status?: Toss$Status,
 }
 
-;
 
 var assign = Object.assign
 
 import { inspect } from 'util'
-
 
 import Resp from '../Resp'
 
@@ -39,7 +39,9 @@ var defaults =
 	status: 400
 }
 
+
 var marker = Symbol('Wrong')
+
 
 export default function Wrong <Code: Toss$Code, Data>
 (
