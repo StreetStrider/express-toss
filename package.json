@@ -34,13 +34,16 @@
       "flow check",
 
     "unit":
-      "npm run dev &&                 mocha    --exit --recursive release/dev/test/case",
+      "npm run dev && mocha --exit --recursive release/dev/test/case",
 
     "cover":
-      "npm run dev && istanbul cover _mocha -- --exit --recursive release/dev/test/case",
+      "nyc --reporter=lcov --reporter=text-summary npm run unit",
 
     "test":
       "npm run st && npm run t && npm run unit",
+
+    "coveralls":
+      "cat coverage/lcov.info | coveralls",
 
     "npm":
       "metalbox preset npm",
@@ -84,8 +87,11 @@
     "sinon":
       "1",
 
-    "istanbul":
-      "*",
+    "nyc":
+      "14",
+
+    "coveralls":
+      "3",
 
     "randomstring":
       "1",
