@@ -82,4 +82,4 @@ express.get('/resource', toss.method(rq =>
 FlowType definitions included.
 
 ## license
-ISC © Strider, 2017.
+ISC © Strider, 2017 — 2019.
