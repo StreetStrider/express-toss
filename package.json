@@ -34,10 +34,10 @@
       "flow check",
 
     "unit":
-      "npm run dev &&                 mocha    --recursive release/dev/test/case",
+      "npm run dev &&                 mocha    --exit --recursive release/dev/test/case",
 
     "cover":
-      "npm run dev && istanbul cover _mocha -- --recursive release/dev/test/case",
+      "npm run dev && istanbul cover _mocha -- --exit --recursive release/dev/test/case",
 
     "test":
       "npm run st && npm run t && npm run unit",
@@ -76,10 +76,10 @@
       "0.98",
 
     "mocha":
-      "3",
+      "6",
 
     "chai":
-      "3",
+      "4",
 
     "sinon":
       "1",
