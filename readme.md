@@ -1,5 +1,7 @@
 # express-toss
 
+[![Travis](https://img.shields.io/travis/StreetStrider/express-toss.svg?style=flat-square)](https://travis-ci.org/StreetStrider/express-toss)
+[![Coveralls](https://img.shields.io/coveralls/StreetStrider/express-toss.svg?style=flat-square)](https://coveralls.io/github/StreetStrider/express-toss)
 [![ISC licensed](http://img.shields.io/badge/license-ISC-brightgreen.svg?style=flat-square)](#license)
 [![npm|express-toss](http://img.shields.io/badge/npm-express--toss-CB3837.svg?style=flat-square)](https://www.npmjs.org/package/express-toss)
 [![flowtype](http://img.shields.io/badge/flow-type-EBBF3A.svg?style=flat-square)](#flow)
