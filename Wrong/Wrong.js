@@ -13,7 +13,6 @@ export type Toss$Code = string
 ; export type Toss$Wrong$Instance<Code: Toss$Code, Data> =
 {
 	code: Code,
-	inspect (): string,
 	resp (): Toss$Resp<Toss$Wrong$Data<Code, Data>>,
 }
 
@@ -28,6 +27,9 @@ export type Toss$Code = string
 ;
 
 var assign = Object.assign
+
+import { inspect } from 'util'
+
 
 import Resp from '../Resp'
 
@@ -69,7 +71,7 @@ export default function Wrong <Code: Toss$Code, Data>
 
 			code: code,
 
-			inspect: () => `[Wrong: ${code}]`,
+			[inspect.custom]: () => `[Wrong: ${code}]`,
 
 			resp: () =>
 			{

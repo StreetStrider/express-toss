@@ -1,5 +1,7 @@
 /* @flow */
 
+import { inspect } from 'util'
+
 import Wrong from '../../../Wrong'
 
 import { expect } from 'chai'
@@ -17,10 +19,9 @@ describe('Wrong', () =>
 		var wr = wrong()
 
 		expect(wr.code).eq('wrong_input')
-		expect(wr.inspect).a('function')
 		expect(wr.resp).a('function')
 
-		expect(wr.inspect()).eq('[Wrong: wrong_input]')
+		expect(inspect(wr)).eq('[Wrong: wrong_input]')
 
 		var resp = wr.resp()
 
@@ -46,7 +47,7 @@ describe('Wrong', () =>
 			data: { data: 'data' }
 		})
 
-		expect(wr.inspect()).eq('[Wrong: wrong_input]')
+		expect(inspect(wr)).eq('[Wrong: wrong_input]')
 	})
 
 	it('Wrong(data) with options', () =>

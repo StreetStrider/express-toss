@@ -1,5 +1,7 @@
 /* @flow */
 
+import { inspect } from 'util'
+
 import Resp from '../../Resp'
 
 import { expect } from 'chai'
@@ -129,45 +131,45 @@ describe('Resp', () =>
 		expect_resp(Resp(400, Intact, 'body'), 400, null, 'body')
 	})
 
-	it('inspect(body)', () =>
+	it('custom inspect(body)', () =>
 	{
-		expect(Resp('body').inspect()).eq('[Resp: 200, body]')
+		expect(inspect(Resp('body'))).eq('[Resp: 200, body]')
 	})
 
-	it('inspect(long body)', () =>
+	it('custom inspect(long body)', () =>
 	{
-		expect(Resp(repeat('_', 100)).inspect())
+		expect(inspect(Resp(repeat('_', 100))))
 		.eq(`[Resp: 200, ${ repeat('_', 25) + '…' + repeat('_', 25) }]`)
 	})
 
-	it('inspect(status, body)', () =>
+	it('custom inspect(status, body)', () =>
 	{
-		expect(Resp(201, 'body').inspect()).eq('[Resp: 201, body]')
+		expect(inspect(Resp(201, 'body'))).eq('[Resp: 201, body]')
 	})
 
-	it('inspect(mime, body)', () =>
+	it('custom inspect(mime, body)', () =>
 	{
-		expect(Resp('text', 'body').inspect()).eq('[Resp: 200, text, body]')
+		expect(inspect(Resp('text', 'body'))).eq('[Resp: 200, text, body]')
 	})
 
-	it('inspect(status, mime, body)', () =>
+	it('custom inspect(status, mime, body)', () =>
 	{
-		expect(Resp(201, 'text', 'body').inspect()).eq('[Resp: 201, text, body]')
+		expect(inspect(Resp(201, 'text', 'body'))).eq('[Resp: 201, text, body]')
 	})
 
-	it('inspect(object)', () =>
+	it('custom inspect(object)', () =>
 	{
-		expect(Resp({ x: 1 }).inspect()).eq('[Resp: 200, { x: 1 }]')
+		expect(inspect(Resp({ x: 1 }))).eq('[Resp: 200, { x: 1 }]')
 	})
 
-	it('inspect(array)', () =>
+	it('custom inspect(array)', () =>
 	{
-		expect(Resp([ 1, 2, 3 ]).inspect()).eq('[Resp: 200, [ 1, 2, 3 ]]')
+		expect(inspect(Resp([ 1, 2, 3 ]))).eq('[Resp: 200, [ 1, 2, 3 ]]')
 	})
 
-	it('inspect(buffer)', () =>
+	it('custom inspect(buffer)', () =>
 	{
-		expect(Resp(new Buffer('abc')).inspect())
+		expect(inspect(Resp(new Buffer('abc'))))
 		.eq('[Resp: 200, <Buffer 61 62 63>]')
 	})
 })

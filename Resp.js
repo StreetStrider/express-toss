@@ -9,7 +9,6 @@
 
 ; export type Toss$Resp<Body> =
 {
-	inspect (): string,
 	toJSON (): [ Toss$Status, Toss$Intacted<Toss$Mime>, Toss$Intacted<Body> ],
 	toss (rs: express$Response): void
 }
@@ -72,7 +71,7 @@ export default function Resp <Body> ()
 
 	return 0,
 	{
-		inspect: () =>
+		[inspect.custom]: () =>
 		{
 			var seq = [ status ]
 
