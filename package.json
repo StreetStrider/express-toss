@@ -61,7 +61,7 @@
   "peerDependencies":
   {
     "express":
-      "4"
+      "^4.5"
   },
 
   "devDependencies":
@@ -94,7 +94,7 @@
       "1.17.3",
 
     "express":
-      "4",
+      "^4.5",
 
     "request":
       "2.80",
@@ -103,6 +103,6 @@
       "4",
 
     "lodash":
-      "4"
+      "^4.17.11"
   }
 }
