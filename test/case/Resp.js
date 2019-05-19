@@ -29,8 +29,8 @@ describe('Resp', () =>
 		expect(Resp({ body: true }).toJSON())
 		.deep.eq([ 200, Intact, { body: true } ])
 
-		expect(Resp(new Buffer('abc')).toJSON())
-		.deep.eq([ 200, Intact, new Buffer('abc') ])
+		expect(Resp(Buffer.from('abc')).toJSON())
+		.deep.eq([ 200, Intact, Buffer.from('abc') ])
 	})
 
 	it('Resp(status, body)', () =>
@@ -44,8 +44,8 @@ describe('Resp', () =>
 		expect(Resp(400, { body: true }).toJSON())
 		.deep.eq([ 400, Intact, { body: true } ])
 
-		expect(Resp(400, new Buffer('abc')).toJSON())
-		.deep.eq([ 400, Intact, new Buffer('abc') ])
+		expect(Resp(400, Buffer.from('abc')).toJSON())
+		.deep.eq([ 400, Intact, Buffer.from('abc') ])
 
 		expect(Resp(400, Intact).toJSON())
 		.deep.eq([ 400, Intact, Intact ])
@@ -60,8 +60,8 @@ describe('Resp', () =>
 		expect(Resp('json', { body: true }).toJSON())
 		.deep.eq([ 200, 'json', { body: true } ])
 
-		expect(Resp('json', new Buffer('abc')).toJSON())
-		.deep.eq([ 200, 'json', new Buffer('abc') ])
+		expect(Resp('json', Buffer.from('abc')).toJSON())
+		.deep.eq([ 200, 'json', Buffer.from('abc') ])
 	})
 
 	it('Resp(status, mime, body)', () =>
@@ -75,8 +75,8 @@ describe('Resp', () =>
 		expect(Resp(400, 'json', { body: true }).toJSON())
 		.deep.eq([ 400, 'json', { body: true } ])
 
-		expect(Resp(400, 'json', new Buffer('abc')).toJSON())
-		.deep.eq([ 400, 'json', new Buffer('abc') ])
+		expect(Resp(400, 'json', Buffer.from('abc')).toJSON())
+		.deep.eq([ 400, 'json', Buffer.from('abc') ])
 	})
 
 	it('Resp(status, Intact, body)', () =>
@@ -94,8 +94,8 @@ describe('Resp', () =>
 		.deep.eq([ 400, Intact, { body: true } ])
 
 		/* @flow-off */
-		expect(Resp(400, Intact, new Buffer('abc')).toJSON())
-		.deep.eq([ 400, Intact, new Buffer('abc') ])
+		expect(Resp(400, Intact, Buffer.from('abc')).toJSON())
+		.deep.eq([ 400, Intact, Buffer.from('abc') ])
 	})
 
 	it('toss(Resp())', () =>
@@ -169,7 +169,7 @@ describe('Resp', () =>
 
 	it('custom inspect(buffer)', () =>
 	{
-		expect(inspect(Resp(new Buffer('abc'))))
+		expect(inspect(Resp(Buffer.from('abc'))))
 		.eq('[Resp: 200, <Buffer 61 62 63>]')
 	})
 })
