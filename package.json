@@ -1,6 +1,6 @@
 {
   "name":    "express-toss",
-  "version": "1.1.4",
+  "version": "2.0.0",
 
   "description": "Makes express router handlers aware of promises. Brings more clear dataflow to handlers.",
 
