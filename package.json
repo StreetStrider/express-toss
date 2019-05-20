@@ -22,7 +22,7 @@
     "toss-to.js",
     "tosser.js",
 
-    "dist/"
+    "jsnext/"
   ],
 
   "scripts":
