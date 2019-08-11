@@ -1,4 +1,3 @@
-/* @flow */
 
 import Debug    from '../../../Wrong/Debug'
 import Internal from '../../../Wrong/Internal'

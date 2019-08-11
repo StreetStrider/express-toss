@@ -1,4 +1,3 @@
-/* @flow */
 
 import tosser from '../../tosser'
 import Resp   from '../../Resp'
@@ -148,8 +147,7 @@ describe('toss', () =>
 	if (1)
 	{
 		var save_console = console.error
-		/* @flow-off */
-		console.error = noop
+				console.error = noop
 	}
 	var spy_console_error = sinon.spy(console, 'error')
 
@@ -167,8 +165,7 @@ describe('toss', () =>
 
 	after(() =>
 	{
-		/* @flow-off */
-		console.error = save_console
+				console.error = save_console
 	})
 
 	it('resp json', with_uri(uri =>
@@ -614,8 +611,7 @@ describe('toss', () =>
 	it('Internal', test_debug_difference(
 	() =>
 	{
-		/* @flow-off */
-		throw Internal([ 1, 2, 3 ])
+				throw Internal([ 1, 2, 3 ])
 	},
 	compose(
 		expect_head(500, 'application/json'),

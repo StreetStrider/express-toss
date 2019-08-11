@@ -1,4 +1,3 @@
-/* @flow */
 
 import Internal from '../../../Wrong/Internal'
 
@@ -16,8 +15,7 @@ describe('Internal', () =>
 
 	it('Internal(something) ignores something', () =>
 	{
-		/* @flow-off */
-		var internal = Internal('something')
+				var internal = Internal('something')
 
 		expect_resp(internal.resp(),
 			500, 'json', { error: 'internal', data: void 0 })

@@ -1,4 +1,3 @@
-/* @flow */
 
 import type { Toss$Wrong } from './Wrong'
 import type { Toss$Wrong$Instance } from './Wrong'
@@ -17,11 +16,9 @@ var marker = Symbol('Debug')
 
 export default function Debug<Data> (data: Data): Toss$Debug$Instance<Data>
 {
-	/* @flow-off */
-	var debug: Toss$Debug$Instance<Data> = DebugWrong(data)
+		var debug: Toss$Debug$Instance<Data> = DebugWrong(data)
 
-	/* @flow-off */
-	debug[marker] = true
+		debug[marker] = true
 
 	return debug
 }

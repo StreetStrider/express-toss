@@ -1,4 +1,3 @@
-/* @flow */
 /* global express$Response */
 
 export type Toss$Status = number

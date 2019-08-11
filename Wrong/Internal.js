@@ -1,4 +1,3 @@
-/* @flow */
 
 import type { Toss$Wrong } from './Wrong'
 import type { Toss$Wrong$Instance } from './Wrong'

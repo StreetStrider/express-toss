@@ -1,4 +1,3 @@
-/* @flow */
 
 export type Options =
 {
@@ -24,8 +23,7 @@ export default function obscurer (options?: Options)
 {
 	options = assign({}, defaults, options)
 
-	/* @flow-off */
-	var debug: boolean = options.debug
+		var debug: boolean = options.debug
 
 	var obscure =
 	{

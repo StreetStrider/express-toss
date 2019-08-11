@@ -1,4 +1,3 @@
-/* @flow */
 
 import Wrong from './Wrong'
 

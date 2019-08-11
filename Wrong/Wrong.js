@@ -1,4 +1,3 @@
-/* @flow */
 
 import type { Toss$Status, Toss$Resp } from '../Resp'
 
@@ -52,13 +51,11 @@ export default function Wrong <Code: Toss$Code, Data>
 {
 	options = assign({}, defaults, options)
 
-	/* @flow-off */
-	var status: Toss$Status = options.status
+		var status: Toss$Status = options.status
 
 	return (data: Data) =>
 	{
-		/* @flow-off */
-		(data == null) && (data = void 0)
+				(data == null) && (data = void 0)
 
 		var body: Toss$Wrong$Data<Code, Data> =
 		{
@@ -68,8 +65,7 @@ export default function Wrong <Code: Toss$Code, Data>
 
 		return 0,
 		{
-			/* @flow-off */
-			[marker]: true,
+						[marker]: true,
 
 			code: code,
 

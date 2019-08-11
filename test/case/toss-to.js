@@ -1,4 +1,3 @@
-/* @flow */
 
 import toss from '../../toss-to'
 import Resp from '../../Resp'

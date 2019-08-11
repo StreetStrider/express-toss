@@ -1,4 +1,3 @@
-/* @flow */
 /* global express$Response */
 
 

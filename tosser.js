@@ -1,4 +1,3 @@
-/* @flow */
 /* global express$Middleware */
 /* global express$Request */
 /* global express$Response */

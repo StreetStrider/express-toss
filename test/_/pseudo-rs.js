@@ -1,4 +1,3 @@
-/* @flow */
 /* global express$Response */
 
 import type { Toss$Resp } from '../../Resp'
@@ -22,8 +21,7 @@ export function pseudo_rs (): pseudo$Response
 		end:  () => {},
 	}
 
-	/* @flow-off */
-	return rs
+		return rs
 }
 
 export function expect_rs

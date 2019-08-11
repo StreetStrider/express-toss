@@ -1,4 +1,3 @@
-/* @flow */
 
 import { inspect } from 'util'
 
@@ -81,20 +80,16 @@ describe('Resp', () =>
 
 	it('Resp(status, Intact, body)', () =>
 	{
-		/* @flow-off */
-		expect(Resp(400, Intact, 'body').toJSON())
+				expect(Resp(400, Intact, 'body').toJSON())
 		.deep.eq([ 400, Intact, 'body' ])
 
-		/* @flow-off */
-		expect(Resp(400, Intact, 200).toJSON())
+				expect(Resp(400, Intact, 200).toJSON())
 		.deep.eq([ 400, Intact, 200 ])
 
-		/* @flow-off */
-		expect(Resp(400, Intact, { body: true }).toJSON())
+				expect(Resp(400, Intact, { body: true }).toJSON())
 		.deep.eq([ 400, Intact, { body: true } ])
 
-		/* @flow-off */
-		expect(Resp(400, Intact, Buffer.from('abc')).toJSON())
+				expect(Resp(400, Intact, Buffer.from('abc')).toJSON())
 		.deep.eq([ 400, Intact, Buffer.from('abc') ])
 	})
 
@@ -127,8 +122,7 @@ describe('Resp', () =>
 	{
 		expect_resp(Resp(400, 'json', 'body'), 400, 'json', 'body')
 		expect_resp(Resp(400, 'json', 200), 400, 'json', 200)
-		/* @flow-off */
-		expect_resp(Resp(400, Intact, 'body'), 400, null, 'body')
+				expect_resp(Resp(400, Intact, 'body'), 400, null, 'body')
 	})
 
 	it('custom inspect(body)', () =>
