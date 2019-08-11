@@ -1,3 +1,5 @@
 /* @flow */
 
-export { default } from './Wrong'
+import Wrong from './Wrong'
+
+export default Wrong
