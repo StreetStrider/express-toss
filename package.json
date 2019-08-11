@@ -31,7 +31,7 @@
       "eslint .",
 
     "t":
-      "flow check",
+      "true",
 
     "unit":
       "gulp --once && mocha --exit --recursive release/dev/test/case",
@@ -63,9 +63,6 @@
 
     "js-outlander":
       "StrangeTransistor/js-outlander#2.5.0",
-
-    "flow-bin":
-      "0.98",
 
     "mocha":
       "6",
