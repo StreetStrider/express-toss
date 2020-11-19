@@ -1,0 +1,14 @@
+{
+	"files": [ "Resp.ts" ],
+	"compilerOptions":
+	{
+		"noEmit": true,
+		"pretty": true,
+
+		"strict": true,
+		"target": "ES6",
+
+		"allowJs": true,
+		"checkJs": false
+	}
+}

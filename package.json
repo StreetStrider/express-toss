@@ -28,10 +28,13 @@
   "scripts":
   {
     "st":
-      "eslint .",
+      "eslint --ext .ts .",
+
+    "st1":
+      "eslint --ext .js,.ts .",
 
     "t":
-      "true",
+      "tsc",
 
     "unit":
       "gulp --once && mocha --exit --recursive release/dev/test/case",
@@ -58,11 +61,25 @@
 
   "devDependencies":
   {
+    "@types/node":
+      "12",
+
+    "@types/express":
+      "^4.5",
+
+
     "eslint":
       "5",
 
     "js-outlander":
       "StrangeTransistor/js-outlander#2.5.0",
+
+    "@typescript-eslint/parser":
+      "*",
+
+    "@typescript-eslint/eslint-plugin":
+      "*",
+
 
     "mocha":
       "6",
@@ -70,20 +87,20 @@
     "chai":
       "4",
 
-    "sinon":
-      "1",
-
-    "nyc":
-      "14",
-
-    "coveralls":
-      "3",
+    "typescript":
+      "3.5",
 
     "randomstring":
       "1",
 
     "console-ultimate":
       "3",
+
+    "gulp":
+      "4",
+
+    "rollup":
+      "1",
 
     "metalpipe":
       "~/Projects/metalpipe",

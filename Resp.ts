@@ -1,10 +1,11 @@
-/* global express$Response */
 
 export type Toss$Status = number
 
 export type Toss$Mime = string
 
-export type Toss$Intacted<T> = T | Symbol
+export type Toss$Intacted<T> = T | typeof Intact
+
+import { Response as express$Response } from 'express'
 
 export type Toss$Resp<Body> =
 {
@@ -12,31 +13,16 @@ export type Toss$Resp<Body> =
 	toss (rs: express$Response): void
 }
 
-/*::
-
-declare export default function Resp <Body> (
-	Toss$Status,
-	Toss$Intacted<Toss$Mime>,
-	Toss$Intacted<Body>
-)
-: Toss$Resp<Body>
-declare export default function Resp <Body>
-(
-	Toss$Status, Toss$Intacted<Body>
-)
-: Toss$Resp<Body>
-declare export default function Resp <Body> (Toss$Mime, Body): Toss$Resp<Body>
-declare export default function Resp <Body> (Body): Toss$Resp<Body>
-declare export default function Resp <Body> (): Toss$Resp<Body>
-
-*/
-
 
 import { inspect } from 'util'
 
 
 /* eslint-disable complexity */
-export default function Resp <Body> ()
+export default function Resp <Body> (status: Toss$Status, mime: Toss$Intacted<Toss$Mime>, body: Toss$Intacted<Body>): Toss$Resp<Body>
+export default function Resp <Body> (status: Toss$Status, body: Toss$Intacted<Body>): Toss$Resp<Body>
+export default function Resp <Body> (mime: Toss$Intacted<Toss$Mime>, body: Toss$Intacted<Body>): Toss$Resp<Body>
+export default function Resp <Body> (body: Toss$Intacted<Body>): Toss$Resp<Body>
+export default function Resp (): any
 {
 	var status: Toss$Status = 200
 	var mime: Toss$Intacted<Toss$Mime> = Intact
@@ -68,11 +54,10 @@ export default function Resp <Body> ()
 		body   = arguments[2]
 	}
 
-	return 0,
-	{
+	return {
 		[inspect.custom]: () =>
 		{
-			var seq = [ status ]
+			var seq: any = [ status ]
 
 			// if (mime !== Intact)
 			if (typeof mime === 'string')
